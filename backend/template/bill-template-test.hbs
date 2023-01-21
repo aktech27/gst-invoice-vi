@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Invoice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        position: relative;
+      }
+      table,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 2px 4px;
+      }
+      table {
+        width: 100%;
+      }
+      .heading,
+      footer p {
+        text-align: center;
+      }
+      .copy {
+        position: absolute;
+        top: 0;
+        right: 10px;
+      }
+      .beneficiary-details td {
+        width: 50%;
+      }
+      .product-details-heading,
+      .product-details-heading-2,
+      #tax-details .tax-details-heading {
+        text-align: center;
+        font-weight: bold;
+      }
+      .product-details-heading td:nth-child(1) {
+        width: 10px;
+      }
+      .product-details-heading td:nth-child(2) {
+        width: calc(50vw - 10px);
+      }
+      .product-details-heading td:nth-child(3),
+      .product-details-heading td:nth-child(4) {
+        width: 8vw;
+      }
+      .product-details-heading td:nth-child(5),
+      .product-details-heading td:nth-child(6) {
+        width: 10vw;
+      }
+      .product-details-heading-2 td:nth-child(1),
+      .product-details-heading-2 td:nth-child(3) {
+        width: 10vw;
+      }
+      .product-details-heading-2 td:nth-child(2),
+      .product-details-heading-2 td:nth-child(4) {
+        width: 20px;
+      }
+      #product-details,
+      #tax-details,
+      .tax-details-heading td,
+      .product-details-heading td {
+        border-top: 0px solid black;
+      }
+      .product-details {
+        text-align: center;
+        height: 35px;
+      }
+      .product-details-empty {
+        height: 200px;
+      }
+      .self-details-container {
+        width: 100%;
+        text-align: center;
+        padding: 5px 10px;
+      }
+      .beneficiary-gstin {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+      footer {
+        font-size: small;
+        margin-top: 5px;
+      }
+      @media print {
+        footer {
+          page-break-after: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="printable">
+      <header>
+        <p class="heading">GST TAX INVOICE<br />Cash/Credit Bill</p>
+        <p class="copy">Original Copy</p>
+      </header>
+      <section>
+        <table id="self-beneficiary-details">
+          <tbody>
+            <tr class="self-details">
+              <td colspan="2">
+                <div class="self-details-container">
+                  <h2>VICTORY INDUSTRIES</h2>
+                  <p>
+                    Mfrs.Electrical Panel Board Accessories, Rolling Shutter Spare parts and Labour
+                    Works
+                  </p>
+                  <h3>GSTIN :33AHXPR7557F1ZM</h3>
+                  <p>NO.83,Gandhi Main Road,Puzhal,Chennai-600 066</p>
+                  <p>State :Tamilnadu Code:33</p>
+                  <p>Contact : 9841378038, 8681054495</p>
+                  <p>Email:victoryindustries2017@gmail.com</p>
+                </div>
+              </td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td rowspan="6">
+                <p><b>TO:</b></p>
+                <p>{{details.to.name}}</p>
+                <p>{{details.to.address.line1}}</p>
+                <p>{{details.to.address.line2}}</p>
+                <p>{{details.to.address.line3}} - {{details.to.address.pincode}}</p>
+                <p>{{details.to.phone}}</p>
+              </td>
+              <td>INVOICE NO : {{details.number}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td>OUR DC : {{details.dc.ours}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td>PARTY DC : {{details.dc.party}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td>YEAR : 2022 - 2023</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td>DATE : {{details.date}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td>LORRY NO :{{details.vehicle}}</td>
+            </tr>
+            <tr class="beneficiary-gstin">
+              <td colspan="2">Party's GSTIN : {{details.to.gstin}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table id="product-details">
+          <tbody>
+            <tr class="product-details-heading">
+              <td rowspan="2">S.NO</td>
+              <td rowspan="2">PARTICULARS</td>
+              <td rowspan="2">HSN</td>
+              <td rowspan="2">QTY</td>
+              <td colspan="2">RATE</td>
+              <td colspan="2">AMOUNT</td>
+            </tr>
+            <tr class="product-details-heading-2">
+              <td>RS</td>
+              <td>p</td>
+              <td>RS</td>
+              <td>P</td>
+            </tr>
+            {{#each details.products}}
+            <tr class="product-details">
+              <td>{{sno @index}}</td>
+              <td>{{this.item.name}}</td>
+              <td>{{this.item.hsn}}</td>
+              <td>{{this.quantity}}</td>
+              <td>{{this.rate}}</td>
+              <td>00</td>
+              <td>{{this.amount}}</td>
+              <td>00</td>
+            </tr>
+            {{/each}}
+            <tr class="product-details-empty">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td rowspan="5" colspan="4">Bank</td>
+              <td colspan="2">TOTAL</td>
+              <td>{{details.subtotal.rs}}</td>
+              <td>{{details.subtotal.p}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">CGST {{details.tax.cgst}}%</td>
+              <td>{{details.cgst.rs}}</td>
+              <td>{{details.cgst.p}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">SGST {{details.tax.sgst}}%</td>
+              <td>{{details.sgst.rs}}</td>
+              <td>{{details.sgst.p}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">IGST {{details.tax.igst}}%</td>
+              <td>{{details.igst.rs}}</td>
+              <td>{{details.igst.p}}</td>
+            </tr>
+            <tr>
+              <td colspan="2">GRAND TOTAL</td>
+              <td>{{details.grandtotal.rs}}</td>
+              <td>{{details.grandtotal.p}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table id="tax-details">
+          <tbody>
+            <tr class="tax-details-heading">
+              <td rowspan="2">HSN</td>
+              <td rowspan="2">Taxable Value</td>
+              <td colspan="2">Central Tax</td>
+              <td colspan="2">State Tax</td>
+              <td colspan="2">Integrated Tax</td>
+              <td rowspan="2">Total Tax</td>
+            </tr>
+            <tr class="tax-details-heading">
+              <td>Rate</td>
+              <td>Amount</td>
+              <td>Rate</td>
+              <td>Amount</td>
+              <td>Rate</td>
+              <td>Amount</td>
+            </tr>
+            <tr class="tax-details">
+              <td>{{details.hsn}}</td>
+              <td>{{details.total}}</td>
+              <td>{{details.tax.cgst}}</td>
+              <td>{{details.cgst.rs}}</td>
+              <td>{{details.tax.sgst}}</td>
+              <td>{{details.sgst.rs}}</td>
+              <td>{{details.tax.igst}}</td>
+              <td>{{details.igst.rs}}</td>
+              <td>{{details.taxtotal}}</td>
+            </tr>
+            <tr>
+              <td colspan="9">Tax Amount(in words) : {{num2words details.taxtotal}}</td>
+            </tr>
+            <tr>
+              <td colspan="7">Rupees : {{num2words details.grandtotal.rs}}</td>
+              <td colspan="2">For <b>VICTORY INDUSTRIES</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <footer>
+        <p>
+          SUBJECT TO CHENNAI JURISDICTION<br />
+          This is a Computer Generated Invoice
+        </p>
+      </footer>
+    </div>
+    <script>
+      const printable = document.querySelector("#printable");
+      const body = document.querySelector("body");
+
+      let t1 = printable.cloneNode(true);
+      let t2 = printable.cloneNode(true);
+
+      t1.childNodes[1].childNodes[3].textContent = "Transport";
+      t2.childNodes[1].childNodes[3].textContent = "Self";
+
+      body.appendChild(t1);
+      body.appendChild(t2);
+    </script>
+  </body>
+</html>

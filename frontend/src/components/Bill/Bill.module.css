@@ -1,0 +1,42 @@
+.inputContainer {
+  position: relative;
+  flex-grow: 1;
+}
+.inputContainer label {
+  position: absolute;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  transition: font-size, translate ease-in 0.25s;
+}
+.inputContainer input::placeholder {
+  opacity: 0;
+}
+.inputContainer input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+.inputContainer:has(input:focus) label,
+.inputContainer:has(input:not(:placeholder-shown)):has(input:not(:focus)) label {
+  translate: 0px -100%;
+  font-size: 12px;
+  padding: 0rem 1rem;
+}
+.addForm {
+  width: max(400px, 90vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 2px solid black;
+  border-radius: 0.5rem 1rem;
+  padding: 1rem;
+}
+
+.addForm fieldset {
+  display: flex;
+  gap: 0.5rem;
+  padding: 10px;
+  width: 100%;
+}
