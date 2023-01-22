@@ -37,6 +37,7 @@ router.get("/download/:id", async (req, res) => {
     .populate("to")
     .populate("products.item")
     .exec();
+  data.number = data.number.toString().padStart(3, "0");
   let total = 0;
   let tax =
     data.to.gstin.substring(0, 2) === "33"
