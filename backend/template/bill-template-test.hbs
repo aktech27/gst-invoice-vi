@@ -130,22 +130,22 @@
                 <p>{{details.to.address.line3}} - {{details.to.address.pincode}}</p>
                 <p>{{details.to.phone}}</p>
               </td>
-              <td>INVOICE NO : {{details.number}}</td>
+              <td><b>INVOICE NO :</b> {{details.number}}</td>
             </tr>
             <tr class="beneficiary-details">
-              <td>OUR DC : {{details.dc.ours}}</td>
+              <td><b>OUR DC : </b>{{details.dc.ours}}</td>
             </tr>
             <tr class="beneficiary-details">
-              <td>PARTY DC : {{details.dc.party}}</td>
+              <td><b>PARTY DC : </b>{{details.dc.party}}</td>
             </tr>
             <tr class="beneficiary-details">
-              <td>YEAR : 2022 - 2023</td>
+              <td><b>YEAR :</b> 2022 - 2023</td>
             </tr>
             <tr class="beneficiary-details">
-              <td>DATE : {{dateFormat details.date}}</td>
+              <td><b>DATE :</b> {{dateFormat details.date}}</td>
             </tr>
             <tr class="beneficiary-details">
-              <td>LORRY NO :{{details.vehicle}}</td>
+              <td><b>LORRY NO :</b>{{details.vehicle}}</td>
             </tr>
             <tr class="beneficiary-gstin">
               <td colspan="2">Party's GSTIN : {{details.to.gstin}}</td>
@@ -191,28 +191,33 @@
               <td></td>
             </tr>
             <tr>
-              <td rowspan="5" colspan="4">Bank</td>
+              <td rowspan="5" colspan="4">
+                <span>BANK : INDIAN BANK</span><br/>
+                <span> A/c No : 6520412737</span><br/>
+                <span>IFSC : IDIB000M172</span><br/>
+                <span>Branch : Medavakkam</span><br/>
+              </td>
               <td colspan="2">TOTAL</td>
               <td>{{details.subtotal.rs}}</td>
               <td>{{details.subtotal.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">CGST {{details.tax.cgst}}%</td>
+              <td colspan="2">CGST <span style="text-align: right;font-weight:bold">{{details.tax.cgst}}%</span></td>
               <td>{{details.cgst.rs}}</td>
               <td>{{details.cgst.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">SGST {{details.tax.sgst}}%</td>
+              <td colspan="2">SGST <span style="text-align: right;font-weight:bold">{{details.tax.sgst}}%</span></td>
               <td>{{details.sgst.rs}}</td>
               <td>{{details.sgst.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">IGST {{details.tax.igst}}%</td>
+              <td colspan="2">IGST <span style="text-align: right;font-weight:bold">{{details.tax.igst}}%</span></td>
               <td>{{details.igst.rs}}</td>
               <td>{{details.igst.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">GRAND TOTAL</td>
+              <td colspan="2">GRAND TOTAL(round)</td>
               <td>{{details.grandtotal.rs}}</td>
               <td>{{details.grandtotal.p}}</td>
             </tr>
@@ -238,7 +243,7 @@
             </tr>
             <tr class="tax-details">
               <td>{{details.hsn}}</td>
-              <td>{{details.total}}</td>
+              <td>{{details.subtotal.rs}}</td>
               <td>{{details.tax.cgst}}</td>
               <td>{{details.cgst.rs}}</td>
               <td>{{details.tax.sgst}}</td>
@@ -271,8 +276,8 @@
       let t1 = printable.cloneNode(true);
       let t2 = printable.cloneNode(true);
 
-      t1.childNodes[1].childNodes[3].textContent = "Transport";
-      t2.childNodes[1].childNodes[3].textContent = "Self";
+      t1.childNodes[1].childNodes[3].textContent = "Duplicate Copy";
+      t2.childNodes[1].childNodes[3].textContent = "Triplicate Copy";
 
       body.appendChild(t1);
       body.appendChild(t2);
