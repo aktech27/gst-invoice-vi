@@ -22,7 +22,7 @@
   padding: 0rem 1rem;
 }
 .addForm {
-  width: max(400px, 90vw);
+  width: max(500px, 85vw);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,39 @@
 
 .addForm fieldset {
   display: flex;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   padding: 10px;
   width: 100%;
+  min-height: 100px;
+  position: relative;
+}
+#product-list {
+  flex-grow: 1;
+}
+.product button {
+  align-self: flex-end;
+  padding: 0.25rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: green;
+  color: white;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.productGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem;
+}
+.productGroup select,
+.productGroup input {
+  padding: 0.5rem 1rem;
+}
+
+productGroup input,
+.productGroup input {
+  width: 100px;
 }

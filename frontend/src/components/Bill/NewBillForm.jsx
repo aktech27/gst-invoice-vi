@@ -1,5 +1,6 @@
 import styles from "./Bill.module.css";
 import { useFetch } from "../../../hooks";
+import newBill from "../../assets/newbill.png";
 
 function Fieldset({ group, nodes, className }) {
   return (
@@ -14,9 +15,10 @@ function NewBillForm({ children }) {
   //children is array of BenenificiaryInput components
   return (
     <form className={styles.addForm} onSubmit={handleFormSubmit}>
-      <Fieldset group="Bill Details" nodes={children.slice(0, 3)} />
-      <Fieldset group="Beneficiary Details" nodes={children.slice(3, 4)} />
-      <Fieldset group="Product Details" nodes={children.slice(4)} />
+      <img src={newBill} alt="Bill" />
+      <Fieldset group="Bill Details" nodes={children.slice(0, 5)} />
+      <Fieldset group="Beneficiary Details" nodes={children.slice(5, 6)} />
+      <Fieldset group="Product Details" nodes={children.slice(6)} className={styles.product} />
       <button type="submit">Submit</button>
     </form>
   );
@@ -24,10 +26,15 @@ function NewBillForm({ children }) {
 
 async function handleFormSubmit(e) {
   e.preventDefault();
-  let [number, date, to, vehicle] = ["number", "date", "to", "vehicle"].map(
-    (id) => document.querySelector(`#${id}`).value
-  );
-  let productList = document.querySelector("#product-list");
+  let [number, date, to, vehicle, ourdc, partydc] = [
+    "number",
+    "date",
+    "to",
+    "vehicle",
+    "ourdc",
+    "partydc",
+  ].map((id) => document.querySelector(`#${id}`).value);
+  let productList = document.querySelector("#product-list div");
 
   let products = new Array();
 
@@ -40,7 +47,15 @@ async function handleFormSubmit(e) {
     products.push(productDetail);
   }
 
-  let billDetails = { number: parseInt(number), date: new Date(date), to, vehicle, products };
+  let billDetails = {
+    number: parseInt(number),
+    date: new Date(date),
+    to,
+    vehicle,
+    products,
+    ourdc,
+    partydc,
+  };
   let res = await useFetch("/api/bill/new", "POST", billDetails);
   let blob = await fetch(`/api/bill/download/${res.message.data._id}`, {
     method: "GET",

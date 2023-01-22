@@ -15,7 +15,8 @@ function BeneficiarySelect() {
   return (
     <>
       <label htmlFor="beneficiary"> Choose Beneficiary : </label>
-      <select name="beneficiary" id="to">
+      <select name="beneficiary" id="to" defaultValue="Choose one">
+        <option hidden>Choose</option>
         {beneficiaryList.map((beneficiary) => (
           <option key={beneficiary.gstin} value={beneficiary._id}>
             {beneficiary.name}

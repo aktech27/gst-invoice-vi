@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useProducts } from "../../../hooks";
+import styles from "./Bill.module.css";
 
 function ProductInput({ products }) {
   return (
-    <>
-      <select name="products">
+    <div className={styles.productGroup}>
+      <select name="products" defaultValue="Select Product">
+        <option hidden>Select</option>
         {products.map((product) => (
           <option key={product._id} value={product._id}>
             {product.name}
           </option>
         ))}
       </select>
-      <input type="text" className="quantity" />
-      <input type="text" className="rate" />
-    </>
+      <input type="text" className="quantity" placeholder="Quantity" />
+      <input type="text" className="rate" placeholder="Rate" />
+    </div>
   );
 }
 
@@ -39,7 +41,7 @@ function ProductGroup() {
     <>
       <div id="product-list">{productInput.map((input) => input)}</div>
       <button type="button" onClick={handleAdd}>
-        Add
+        ADD
       </button>
     </>
   );
