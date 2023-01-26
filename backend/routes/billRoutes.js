@@ -23,6 +23,11 @@ router.get("/view", async (req, res) => {
   res.status(200).json({ data });
 });
 
+router.get("/billnumber", async (req, res) => {
+  let recentBillNo = await Bill.find().sort({ number: -1 }).limit(1).select("number");
+  return res.status(200).json({ billNo: recentBillNo[0].number });
+});
+
 router.get("/view/:id", async (req, res) => {
   let data = await Bill.findOne({ _id: req.params.id })
     .populate("to")
