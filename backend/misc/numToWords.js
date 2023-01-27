@@ -55,7 +55,7 @@ function numToWords(currency) {
   if (currency > 99) {
     let result = "";
 
-    let [tens, hundred, thousand, lakh, crore] = formatToArray(currency.toString());
+    let [tens, hundred, thousand, lakh, crore] = formatToArray(currency.toString().split(".")[0]);
     if (crore && crore != "00") result += `${inWords(crore)} Crores `;
     if (lakh && lakh != "00") result += `${inWords(lakh)} Lakhs `;
     if (thousand && thousand != "00") result += `${inWords(thousand)} Thousand `;
