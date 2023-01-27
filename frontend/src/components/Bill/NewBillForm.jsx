@@ -34,15 +34,16 @@ async function handleFormSubmit(e) {
     "ourdc",
     "partydc",
   ].map((id) => document.querySelector(`#${id}`).value);
-  let productList = document.querySelector("#product-list div");
+  let productList = document.querySelectorAll("#product-list div");
+  console.log(productList);
 
   let products = new Array();
 
-  for (let i = 0; i < productList.childNodes.length; i += 3) {
+  for (let i = 0; i < productList.length; i++) {
     const productDetail = new Object();
-    productDetail.item = productList.childNodes[i].value;
-    productDetail.quantity = productList.childNodes[i + 1].value;
-    productDetail.rate = productList.childNodes[i + 2].value;
+    productDetail.item = productList[i].childNodes[0].value;
+    productDetail.quantity = productList[i].childNodes[1].value;
+    productDetail.rate = productList[i].childNodes[2].value;
 
     products.push(productDetail);
   }

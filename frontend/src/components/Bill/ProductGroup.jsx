@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useProducts } from "../../../hooks";
+import { useEffect, useState, useRef } from "react";
+import { useFetch, useProducts } from "../../../hooks";
 import styles from "./Bill.module.css";
 
 function ProductInput({ products }) {
@@ -20,29 +20,58 @@ function ProductInput({ products }) {
 }
 
 function ProductGroup() {
-  const [productList, setProductList] = useState([]);
+  const groupSelector = useRef();
+  const [allProducts, setAllProducts] = useState([]);
+  const [filter, setFilter] = useState(false);
+  const [productGroups, setProductGroups] = useState([]);
   const [productInput, setProductInput] = useState([]);
 
   useEffect(() => {
     async function getAllProducts() {
-      let data = await useProducts();
-      setProductList(data);
+      let { message } = await useFetch("/api/product/groups", "GET");
+      setProductGroups(message);
+      setAllProducts(await useProducts());
     }
     getAllProducts();
   }, []);
 
   function handleAdd() {
     setProductInput((prev) => {
-      return [...prev, <ProductInput key={productInput.length} products={productList} />];
+      return [
+        ...prev,
+        <ProductInput
+          key={productInput.length}
+          products={allProducts}
+          groupSelector={groupSelector}
+        />,
+      ];
     });
+  }
+
+  function handleGroupSelect() {
+    if (groupSelector.current.value !== "All")
+      setAllProducts((prev) => prev.filter((p) => p.group === groupSelector.current.value));
+    setFilter(true);
   }
 
   return (
     <>
       <div id="product-list">{productInput.map((input) => input)}</div>
-      <button type="button" onClick={handleAdd}>
-        ADD
-      </button>
+      {!filter ? (
+        <select ref={groupSelector} onChange={handleGroupSelect}>
+          <option hidden>Select One</option>
+          {productGroups.map((group) => (
+            <option key={group} value={group}>
+              {group}
+            </option>
+          ))}
+          <option value="All">All Groups</option>
+        </select>
+      ) : (
+        <button type="button" onClick={handleAdd}>
+          ADD
+        </button>
+      )}
     </>
   );
 }
