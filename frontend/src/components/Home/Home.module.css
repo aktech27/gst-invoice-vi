@@ -1,0 +1,40 @@
+.quickLinks {
+  display: flex;
+  gap: 1rem;
+}
+.linkContainer {
+  text-decoration: none;
+  color: black;
+  border-radius: 0.25rem;
+  border: 2px solid black;
+  padding: 1rem;
+  display: grid;
+  grid-template-areas: "stack";
+  place-items: center;
+  position: relative;
+  aspect-ratio: 1;
+  background: rgb(174, 174, 255);
+  background: linear-gradient(165deg, rgb(218, 218, 255) 9%, rgb(255, 255, 255) 100%);
+  transition: scale 0.25s ease;
+}
+.linkContainer > * {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+}
+.linkContainer div {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: bold;
+  z-index: 2;
+}
+.linkContainer img {
+  width: 100%;
+  object-fit: contain;
+  position: absolute;
+  opacity: 0.5;
+  z-index: 1;
+}
+.linkContainer:hover {
+  scale: 1.05;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.35);
+}

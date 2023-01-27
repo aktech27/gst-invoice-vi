@@ -1,13 +1,11 @@
-import { Link } from "react-router-dom";
+import QuickLinks from "../components/Home/QuickLinks";
 
 function Home() {
   return (
-    <>
-      <h1>Victory Industries</h1>
-      <Link to="/beneficiary">Manage Beneficiary</Link>
-      <Link to="/bill/new">Generate Invoice</Link>
-      <Link to="/beneficiary">View Beneficiary</Link>
-    </>
+    <div className="home-container">
+      <h1 className="track-in">Victory Industries</h1>
+      <QuickLinks />
+    </div>
   );
 }
 
