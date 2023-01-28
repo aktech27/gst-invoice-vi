@@ -71,8 +71,16 @@ router.get("/download/:id", async (req, res) => {
     taxtotal: total * 0.18,
     grandtotal: { rs: total + total * 0.18, p: "00" },
   };
+  let groupByHsn = new Object();
+  data.products.forEach((product) => {
+    if (groupByHsn.hasOwnProperty(product.item.hsn)) {
+      groupByHsn[product.item.hsn].amount += product.amount;
+    } else {
+      groupByHsn[product.item.hsn] = { amount: product.amount, tax };
+    }
+  });
   const hbsTemplate = fs.readFileSync(`${process.cwd()}/template/bill-template-test.hbs`, "utf8");
-  const html = await hbsCompiler(hbsTemplate, { details: { ...data, ...others } });
+  const html = await hbsCompiler(hbsTemplate, { details: { ...data, ...others, groupByHsn } });
   let billNo = data.number.toString().padStart(3, "0");
   await generatePDF(html, billNo);
   res.download(`${process.cwd()}/output/Invoice-${billNo}.pdf`);

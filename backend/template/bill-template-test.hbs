@@ -241,17 +241,19 @@
               <td>Rate</td>
               <td>Amount</td>
             </tr>
+            {{#each details.groupByHsn}}
             <tr class="tax-details">
-              <td>{{details.hsn}}</td>
-              <td>{{details.subtotal.rs}}</td>
-              <td>{{details.tax.cgst}}</td>
-              <td>{{details.cgst.rs}}</td>
-              <td>{{details.tax.sgst}}</td>
-              <td>{{details.sgst.rs}}</td>
-              <td>{{details.tax.igst}}</td>
-              <td>{{details.igst.rs}}</td>
-              <td>{{details.taxtotal}}</td>
+              <td>{{@key}}</td>
+              <td>{{this.amount}}</td>
+              <td>{{this.tax.cgst}}</td>
+              <td>{{calculateTax this.amount this.tax.cgst}}</td>
+              <td>{{this.tax.sgst}}</td>
+              <td>{{calculateTax this.amount this.tax.sgst}}</td>
+              <td>{{this.tax.igst}}</td>
+              <td>{{calculateTax this.amount this.tax.igst}}</td>
+              <td>{{calculateTotalTax this.amount this.tax}}</td>
             </tr>
+            {{/each}}
             <tr>
               <td colspan="9">Tax Amount(in words) : {{num2words details.taxtotal}}</td>
             </tr>
