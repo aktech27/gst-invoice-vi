@@ -74,12 +74,25 @@
         height: 35px;
       }
       .product-details-empty {
-        height: 200px;
+        height: calc(200px);
       }
       .self-details-container {
         width: 100%;
         text-align: center;
         padding: 5px 10px;
+        position: relative;
+      }
+      .self-details-container h4 {
+        position: absolute;
+        top: 5px;
+        left: 0;
+      }
+      .self-details-container img {
+        position: absolute;
+        right: 0;
+        top: 20px;
+        width: 90px;
+        aspect-ratio: 1;
       }
       .beneficiary-gstin {
         font-size: 24px;
@@ -113,11 +126,12 @@
                     Mfrs.Electrical Panel Board Accessories, Rolling Shutter Spare parts and Labour
                     Works
                   </p>
-                  <h3>GSTIN :33AHXPR7557F1ZM</h3>
+                  <h4>GSTIN :33AHXPR7557F1ZM</h3>
                   <p>NO.83,Gandhi Main Road,Puzhal,Chennai-600 066</p>
                   <p>State :Tamilnadu Code:33</p>
-                  <p>Contact : 9841378038, 8681054495</p>
+                  <p>Contact : 9841378038 8681054495</p>
                   <p>Email:victoryindustries2017@gmail.com</p>
+                  <img src="http:/localhost:5005/logo.png" alt="logo" />
                 </div>
               </td>
             </tr>
@@ -192,27 +206,33 @@
             </tr>
             <tr>
               <td rowspan="5" colspan="4">
-                <span>BANK : INDIAN BANK</span><br/>
-                <span> A/c No : 6520412737</span><br/>
-                <span>IFSC : IDIB000M172</span><br/>
-                <span>Branch : Medavakkam</span><br/>
+                <span>BANK : INDIAN BANK</span><br />
+                <span> A/c No : 6520412737</span><br />
+                <span>IFSC : IDIB000M172</span><br />
+                <span>Branch : Medavakkam</span><br />
               </td>
               <td colspan="2">TOTAL</td>
               <td>{{details.subtotal.rs}}</td>
               <td>{{details.subtotal.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">CGST <span style="text-align: right;font-weight:bold">{{details.tax.cgst}}%</span></td>
+              <td colspan="2">
+                CGST <span style="text-align: right; font-weight: bold">{{details.tax.cgst}}%</span>
+              </td>
               <td>{{details.cgst.rs}}</td>
               <td>{{details.cgst.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">SGST <span style="text-align: right;font-weight:bold">{{details.tax.sgst}}%</span></td>
+              <td colspan="2">
+                SGST <span style="text-align: right; font-weight: bold">{{details.tax.sgst}}%</span>
+              </td>
               <td>{{details.sgst.rs}}</td>
               <td>{{details.sgst.p}}</td>
             </tr>
             <tr>
-              <td colspan="2">IGST <span style="text-align: right;font-weight:bold">{{details.tax.igst}}%</span></td>
+              <td colspan="2">
+                IGST <span style="text-align: right; font-weight: bold">{{details.tax.igst}}%</span>
+              </td>
               <td>{{details.igst.rs}}</td>
               <td>{{details.igst.p}}</td>
             </tr>

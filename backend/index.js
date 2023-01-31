@@ -28,7 +28,7 @@ app.use("/api/beneficiary", require("./routes/beneficiaryRoutes"));
 app.use("/api/product", require("./routes/productRoutes"));
 app.use("/api/bill", require("./routes/billRoutes"));
 
-// app.use(express.static("build"));
+app.use(express.static("build"));
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "build", "index.html"));

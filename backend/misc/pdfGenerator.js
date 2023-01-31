@@ -5,11 +5,11 @@ const generatePDF = async (html, billNo) => {
   const page = await browser.newPage();
 
   await page.setContent(html, {
-    waitUntil: "domcontentloaded",
+    waitUntil: "networkidle0",
   });
 
   await page.pdf({
-    format: "letter",
+    format: "A4",
     margin: {
       top: 10,
       bottom: 10,

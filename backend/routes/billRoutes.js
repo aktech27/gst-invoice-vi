@@ -54,6 +54,7 @@ router.get("/download/:id", async (req, res) => {
       : { sgst: 0, cgst: 0, igst: 18 };
   data.products.forEach((product) => (total += product.amount));
   let others = {
+    css: { blankSpace: `${40 * data.products.length}px` },
     subtotal: { rs: total, p: "00" },
     tax,
     cgst: {
