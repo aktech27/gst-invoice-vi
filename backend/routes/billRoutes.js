@@ -7,9 +7,9 @@ const fs = require("fs");
 router.post("/new", async (req, res) => {
   console.log(req.body);
   try {
-    let { number, date, to, products, vehicle } = req.body;
+    let { number, date, to, products, vehicle, dc } = req.body;
 
-    let test = await new Bill({ number, date, to, products, vehicle }).save();
+    let test = await new Bill({ number, date, to, products, vehicle, dc }).save();
     return res.status(200).json({ message: "Bill Creation Successful", data: test });
   } catch (error) {
     handleError("Bill Creation Error", __filename, error);

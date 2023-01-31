@@ -54,8 +54,10 @@ async function handleFormSubmit(e) {
     to,
     vehicle,
     products,
-    ourdc,
-    partydc,
+    dc: {
+      ours: ourdc,
+      party: partydc,
+    },
   };
   let res = await useFetch("/api/bill/new", "POST", billDetails);
   let blob = await fetch(`/api/bill/download/${res.message.data._id}`, {
