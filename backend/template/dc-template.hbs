@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Invoice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        position: relative;
+      }
+      table,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 2px 4px;
+      }
+      table {
+        width: 100%;
+      }
+      .heading,
+      footer p {
+        text-align: center;
+      }
+      .copy {
+        position: absolute;
+        top: 0;
+        right: 10px;
+      }
+      .beneficiary-details td {
+        width: 50%;
+      }
+      .product-details-heading,
+      .product-details-heading-2,
+      #tax-details .tax-details-heading {
+        text-align: center;
+        font-weight: bold;
+      }
+      .product-details-heading td:nth-child(1) {
+        width: 10px;
+      }
+      .product-details-heading td:nth-child(2) {
+        width: calc(70vw - 10px);
+      }
+      .product-details-heading td:nth-child(3),
+      .product-details-heading td:nth-child(4) {
+        width: 15vw;
+      }
+      .product-details-heading td:nth-child(5){
+        width: 15vw;
+      }
+      #product-details,
+      #tax-details,
+      .tax-details-heading td,
+      .product-details-heading td {
+        border-top: 0px solid black;
+      }
+      .product-details {
+        text-align: center;
+        height: 35px;
+      }
+      .product-details-value{
+        padding: 10px 5px;
+        font-size: 18px;
+      }
+      .product-details-empty {
+        height: calc(200px);
+      }
+      .self-details-container {
+        width: 100%;
+        text-align: center;
+        padding: 5px 10px;
+        position: relative;
+      }
+      .self-details-container h4 {
+        position: absolute;
+        top: 5px;
+        left: 0;
+      }
+      .self-details-container img {
+        position: absolute;
+        right: 0;
+        top: 20px;
+        width: 90px;
+        aspect-ratio: 1;
+      }
+      .beneficiary-gstin {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+      .dc-description{
+        text-align: center;
+        font-size: 20px;
+      }
+      .dc-end{
+        height: 40px;
+      }
+      footer {
+        font-size: small;
+        margin-top: 5px;
+      }
+      @media print {
+        footer {
+          page-break-after: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="printable">
+      <header>
+        <p class="heading">DELIVERY CHALLAN</p>
+        <p class="copy">Original Copy</p>
+      </header>
+      <section>
+        <table id="self-beneficiary-details">
+          <tbody>
+            <tr class="self-details">
+              <td colspan="2">
+                <div class="self-details-container">
+                  <h2>VICTORY INDUSTRIES</h2>
+                  <p>
+                    Mfrs.Electrical Panel Board Accessories, Rolling Shutter Spare parts and Labour
+                    Works
+                  </p>
+                  <h4>GSTIN :33AHXPR7557F1ZM</h3>
+                  <p>NO.83,Gandhi Main Road,Puzhal,Chennai-600 066</p>
+                  <p>State :Tamilnadu Code:33</p>
+                  <p>Contact : 9841378038 8681054495</p>
+                  <p>Email:victoryindustries2017@gmail.com</p>
+                  <img src="http://localhost:5005/logo.png" alt="logo" />
+                </div>
+              </td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td rowspan="5">
+                <p><b>TO:</b></p>
+                <p>{{details.to.name}}</p>
+                <p>{{details.to.address.line1}}</p>
+                <p>{{details.to.address.line2}}</p>
+                <p>{{details.to.address.line3}} - {{details.to.address.pincode}}</p>
+                <p>{{details.to.phone}}</p>
+              </td>
+              <td><b>DC NO :</b> {{details.number}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td><b>YOUR DC NO : </b>{{details.dc.party}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td><b>YEAR :</b> 2022 - 2023</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td><b>DATE :</b> {{dateFormat details.date}}</td>
+            </tr>
+            <tr class="beneficiary-details">
+              <td><b>LORRY NO :</b>{{details.vehicle}}</td>
+            </tr>
+            <tr class="beneficiary-gstin">
+              <td colspan="2">Party's GSTIN : {{details.to.gstin}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table id="product-details">
+          <tbody>
+            <tr class="product-details-heading">
+              <td>S.NO</td>
+              <td>PARTICULARS</td>
+              <td>HSN</td>
+              <td>QTY</td>
+              <td>VALUE</td>
+            </tr>
+            {{#each details.products}}
+            <tr class="product-details">
+              <td>{{sno @index}}</td>
+              <td>{{this.item.name}}</td>
+              <td>{{this.item.hsn}}</td>
+              <td>{{this.quantity}}</td>
+              <td>{{this.value}}</td>
+            </tr>
+            {{/each}}
+            <tr class="product-details-empty">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <h3 class="product-details-value">Approximate Value : Rs. {{details.totalValue}}</h3>
+              </td>
+            </tr>
+            <tr>
+              <td class="dc-description" colspan="5">
+                <span><b>JOB WORK ONLY</b></span><br />
+                <span>Job work for <b>Electro Plating</b></span><br />
+                <span>Not for Sale</span>
+              </td>
+            </tr>
+            <tr class="dc-end">
+              <td colspan="4">Rupees : {{num2words details.grandtotal.rs}}</td>
+              <td colspan="1">For <b>VICTORY INDUSTRIES</b></td>
+            </tr>
+        </table>
+      </section>
+      <footer>
+        <p>
+          SUBJECT TO CHENNAI JURISDICTION<br />
+          This is a Computer Generated Challan
+        </p>
+      </footer>
+    </div>
+    <script>
+      const printable = document.querySelector("#printable");
+      const body = document.querySelector("body");
+
+      let t1 = printable.cloneNode(true);
+      let t2 = printable.cloneNode(true);
+
+      t1.childNodes[1].childNodes[3].textContent = "Duplicate Copy";
+      t2.childNodes[1].childNodes[3].textContent = "Triplicate Copy";
+
+      body.appendChild(t1);
+      body.appendChild(t2);
+    </script>
+  </body>
+</html>
