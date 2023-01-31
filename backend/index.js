@@ -27,6 +27,7 @@ app.use(express.json());
 app.use("/api/beneficiary", require("./routes/beneficiaryRoutes"));
 app.use("/api/product", require("./routes/productRoutes"));
 app.use("/api/bill", require("./routes/billRoutes"));
+app.use("/api/dc", require("./routes/dcRoutes"));
 
 app.use(express.static("build"));
 
