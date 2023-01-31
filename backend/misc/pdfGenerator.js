@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 
-const generatePDF = async (html, billNo) => {
+const generatePDF = async (html, billNo, type = "Invoice") => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -16,7 +16,7 @@ const generatePDF = async (html, billNo) => {
       left: 20,
       right: 20,
     },
-    path: `${process.cwd()}/output/Invoice-${billNo}.pdf`,
+    path: `${process.cwd()}/output/${type}-${billNo}.pdf`,
   });
   await browser.close();
 };
