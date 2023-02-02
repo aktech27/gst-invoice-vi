@@ -5,25 +5,13 @@ import BeneficiaryCard from "../components/Beneficiary/BeneficiaryCard";
 
 function Beneficiary() {
   const [allBeneficiaries, setAllBeneficiaries] = useState([]);
-  const greet = useHello();
 
   useEffect(() => {
     async function getAllBeneficiary() {
       let data = await useBeneficiary();
       setAllBeneficiaries(data);
     }
-    async function dow() {
-      let res = await fetch("/api/bill/download/63b26652b31ad82cd9431840", {
-        method: "GET",
-      });
-      let pdf = await res.blob();
-      var a = document.createElement("a");
-      a.href = window.URL.createObjectURL(pdf);
-      a.download = "FILENAME";
-      a.click();
-    }
     getAllBeneficiary();
-    //dow();
   }, []);
   return (
     <>

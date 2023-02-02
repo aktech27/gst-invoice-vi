@@ -21,18 +21,75 @@
 .beneficiaryCard {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   margin: 2em;
   width: 250px;
   aspect-ratio: 6/8;
+  background: linear-gradient(60deg, #87cefa 0%, #e0ffff 75%);
   box-shadow: 5px 5px 20px -10px rgba(0, 0, 0, 0.5), -5px 5px 20px -10px rgba(0, 0, 0, 0.5);
   border-radius: 0.75rem;
+  overflow: hidden;
 }
 
 .beneficiaryCard:hover {
+  background: linear-gradient(60deg, #87cefa 0%, #e0ffff 75%);
   box-shadow: 10px 10px 25px -10px rgba(0, 0, 0, 0.25), -10px 10px 25px -10px rgba(0, 0, 0, 0.25);
   scale: 1.05;
+}
+.beneficiaryCard:hover .beneficiaryCardAction,
+.beneficiaryCard:hover .beneficiaryCardDetails {
+  translate: 0;
+}
+
+.beneficiaryCardAction {
+  display: flex;
+  gap: 0.5rem;
+  align-self: flex-end;
+  margin: 0.5rem;
+  translate: 100px;
+  transition: translate 500ms ease;
+}
+
+.beneficiaryCardAction span {
+  width: 35px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 50%;
+}
+
+.beneficiaryCardAction span:hover {
+  cursor: pointer;
+  scale: 1.05;
+}
+
+.beneficiaryCardEdit {
+  background-color: #00ff40;
+}
+.beneficiaryCardEdit:hover {
+  background-color: #0cf045;
+  box-shadow: 5px 5px 10px -4px #55ff7f, 0px 5px 10px -4px #55ff7f;
+}
+.beneficiaryCardDelete {
+  background-color: #e4181e;
+}
+
+.beneficiaryCardDelete:hover {
+  background-color: #d30a11;
+  box-shadow: 5px 5px 10px -4px #f43c42, 0px 5px 10px -4px #f43c42;
+}
+
+.beneficiaryCardMain {
+  text-align: center;
+}
+
+.beneficiaryCardDetails {
+  font-size: 12px;
+  translate: 0 100%;
+  transition: translate 500ms ease;
 }
 
 .inputContainer {
