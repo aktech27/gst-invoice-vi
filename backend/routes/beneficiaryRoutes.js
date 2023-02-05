@@ -47,6 +47,18 @@ router.put("/edit/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    let test = await Beneficiary.deleteOne({ _id: id });
+    console.log(test);
+    return res.status(200).json({ message: "Beneficiary Deleted Successfully" });
+  } catch (error) {
+    handleError("Beneficiary Deletion Error", __filename, error);
+    return res.status(500).json({ error: "Beneficiary Deletion Error", description: error });
+  }
+});
+
 router.get("/view", async (req, res) => {
   let allBeneficiaries = await Beneficiary.find({});
   res.status(200).json({ data: allBeneficiaries });

@@ -3,6 +3,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import EditModal from "./EditModal";
 import { useState } from "react";
+import { useFetch } from "../../../hooks";
 
 function BeneficiaryCard({ details }) {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,14 @@ function BeneficiaryCard({ details }) {
           >
             <BiEdit />
           </span>
-          <span className={styles.beneficiaryCardDelete}>
+          <span
+            className={styles.beneficiaryCardDelete}
+            onClick={async () => {
+              let response = await useFetch(`/api/beneficiary/delete/${details._id}`, "DELETE");
+              console.log(response);
+              window.location.reload();
+            }}
+          >
             <MdDeleteForever />
           </span>
         </div>
