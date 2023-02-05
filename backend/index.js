@@ -7,7 +7,7 @@ mongoose.set("strictQuery", true);
 
 //Connect to database
 mongoose
-  .connect(process.env.DB_URI)
+  .connect(process.env.DB_URI_TEST)
   .then(() => {
     console.log("Connect to DB");
   })
@@ -32,7 +32,7 @@ app.use("/api/dc", require("./routes/dcRoutes"));
 app.use(express.static("build"));
 
 // app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "build", "index.html"));
+//   res.sendFile(pajth.resolve(__dirname, "build", "index.html"));
 // });
 
 app.listen(process.env.PORT, () => {

@@ -32,3 +32,15 @@
 .home-container a {
   grid-column: span 2;
 }
+
+body:has(.modal-container) {
+  overflow: hidden;
+}
+
+button[type="submit"] {
+  background-color: #6666ff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}

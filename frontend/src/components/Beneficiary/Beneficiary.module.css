@@ -115,3 +115,53 @@
   font-size: 12px;
   padding: 0rem 1rem;
 }
+
+.modal {
+  position: absolute;
+  top: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  width: min(600px, 90vw);
+  aspect-ratio: 16/9;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 10px 10px 80px 10px rgba(255, 255, 255, 0.6);
+}
+.modalCancel {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  background-color: #d30a11;
+  color: #fff;
+  border-color: #fff;
+  border-radius: 50%;
+  height: 30px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  font-weight: bolder;
+  font-size: 20px;
+}
+.editContainer {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+.dataContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
