@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProducts } from "../../hooks";
 import Loading from "../components/Loading";
+import ProductTable from "../components/Product/ProductTable";
 
 function Beneficiary() {
   const [allProducts, setallProducts] = useState([]);
@@ -20,12 +21,7 @@ function Beneficiary() {
     <>
       {loading && <Loading />}
       <h1>Products</h1>
-      {allProducts &&
-        allProducts.map((product) => (
-          <div key={product._id}>
-            {product._id} - {product.name}
-          </div>
-        ))}
+      <ProductTable allProducts={allProducts} />
       <Link to="./add">Add Product</Link>
     </>
   );

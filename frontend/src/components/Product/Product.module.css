@@ -1,0 +1,32 @@
+.productTable {
+  border-collapse: collapse;
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  overflow-x: scroll;
+  cursor: pointer;
+}
+
+.productTable td,
+.productTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.productTable tr:nth-child(even) {
+  background-color: #d6d6f4;
+}
+
+.productTable tr:hover {
+  background-color: #bfbfff;
+}
+
+.productTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6666ff;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: default;
+}
