@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useBeneficiary } from "../../hooks";
+import { useBeneficiary } from "../hooks";
 import BeneficiaryCard from "../components/Beneficiary/BeneficiaryCard";
 import Loading from "../components/Loading";
 

@@ -1,4 +1,4 @@
-import { useFetch } from "../../hooks";
+import { useFetch } from "../hooks";
 
 function AddProduct() {
   return (

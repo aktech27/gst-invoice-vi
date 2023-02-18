@@ -1,5 +1,5 @@
 import styles from "./Bill.module.css";
-import { useFetch } from "../../../hooks";
+import { useFetch } from "../../hooks";
 import newBill from "../../assets/newbill.png";
 
 function Fieldset({ group, nodes, className }) {

@@ -3,7 +3,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import EditModal from "./EditModal";
 import { useState } from "react";
-import { useFetch } from "../../../hooks";
+import { useFetch } from "../../hooks";
 
 function BeneficiaryCard({ details }) {
   const [showModal, setShowModal] = useState(false);

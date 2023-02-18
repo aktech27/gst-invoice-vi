@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Product.module.css";
-import useFetch from "../../../hooks/useFetch";
+import { useFetch } from "../../hooks";
 
 export default function EditModal({ data, set }) {
   return (

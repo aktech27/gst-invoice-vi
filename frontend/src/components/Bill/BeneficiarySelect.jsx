@@ -1,6 +1,6 @@
 import styles from "./Bill.module.css";
 import { useEffect, useState } from "react";
-import { useBeneficiary } from "../../../hooks";
+import { useBeneficiary } from "../../hooks";
 
 function BeneficiarySelect() {
   const [beneficiaryList, setBeneficiaryList] = useState([]);

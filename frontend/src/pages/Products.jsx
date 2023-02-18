@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useProducts } from "../../hooks";
+import { useProducts } from "../hooks";
 import Loading from "../components/Loading";
 import ProductTable from "../components/Product/ProductTable";
 

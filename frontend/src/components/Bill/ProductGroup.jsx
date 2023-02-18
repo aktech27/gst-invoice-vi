@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useFetch, useProducts } from "../../../hooks";
+import { useFetch, useProducts } from "../../hooks";
 import styles from "./Bill.module.css";
 
 function ProductInput({ products }) {

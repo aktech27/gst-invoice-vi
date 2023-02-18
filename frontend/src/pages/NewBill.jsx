@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFetch } from "../../hooks";
+import { useFetch } from "../hooks";
 import BeneficiarySelect from "../components/Bill/BeneficiarySelect";
 import BillInput from "../components/Bill/BillInput";
 import NewBillForm from "../components/Bill/NewBillForm";
