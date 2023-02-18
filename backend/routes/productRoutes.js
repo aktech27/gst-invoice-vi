@@ -22,4 +22,23 @@ router.get("/view", async (req, res) => {
   res.status(200).json({ data: allProducts });
 });
 
+router.put("/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    let { name, hsn, rate, tax, group } = req.body;
+    let data = {
+      name,
+      hsn,
+      rate,
+      tax,
+      group,
+    };
+    await Product.updateOne({ _id: id }, data).exec();
+    return res.status(200).json({ message: "Product Updated Successfully" });
+  } catch (error) {
+    handleError("Product Updation Error", __filename, error);
+    return res.status(500).json({ error: "Product Updation Error", description: error });
+  }
+});
+
 module.exports = router;
