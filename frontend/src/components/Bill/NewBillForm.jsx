@@ -1,6 +1,8 @@
 import styles from "./Bill.module.css";
 import { useFetch } from "../../hooks";
 import newBill from "../../assets/newbill.png";
+import { useContext } from "react";
+import { LoadingContext } from "../../context/Provider/LoadingContext";
 
 function Fieldset({ group, nodes, className }) {
   return (
@@ -11,10 +13,11 @@ function Fieldset({ group, nodes, className }) {
   );
 }
 
-function NewBillForm({ children, setLoading }) {
+function NewBillForm({ children }) {
+  const { setIsLoading } = useContext(LoadingContext);
   async function handleFormSubmit(e) {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     let [number, date, to, vehicle, ourdc, partydc] = [
       "number",
       "date",
@@ -52,7 +55,7 @@ function NewBillForm({ children, setLoading }) {
     let blob = await fetch(`/api/bill/download/${res.message.data._id}`, {
       method: "GET",
     }).then((res) => res.blob());
-    setLoading(false);
+    setIsLoading(false);
     let alink = document.createElement("a");
     alink.href = window.URL.createObjectURL(blob);
     alink.download = `Invoice-${res.message.data.number.toString().padStart(3, "0")}.pdf`;

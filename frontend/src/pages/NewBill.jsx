@@ -1,29 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useFetch } from "../hooks";
 import BeneficiarySelect from "../components/Bill/BeneficiarySelect";
 import BillInput from "../components/Bill/BillInput";
 import NewBillForm from "../components/Bill/NewBillForm";
 import ProductGroup from "../components/Bill/ProductGroup";
-import Loading from "../components/Loading";
+import { LoadingContext } from "../context/Provider/LoadingContext";
 
 function NewBill() {
   const [billNumber, setBillNumber] = useState();
-  const [loading, setLoading] = useState(false);
+  const { setIsLoading } = useContext(LoadingContext);
   useEffect(() => {
     async function getBillNumber() {
       let { message } = await useFetch("/api/bill/billnumber", "GET");
       setBillNumber(message.billNo + 1);
-      setLoading(false);
+      setIsLoading(false);
     }
-    setLoading(true);
+    setIsLoading(true);
     getBillNumber();
   }, []);
 
   return (
     <>
-      {loading && <Loading />}
       <h1>Generate New</h1>
-      <NewBillForm setLoading={setLoading}>
+      <NewBillForm>
         <BillInput label="Bill No" id="number" value={billNumber} />
         <BillInput
           type="date"
