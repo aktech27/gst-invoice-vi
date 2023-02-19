@@ -1,23 +1,15 @@
-import styles from "./Bill.module.css";
-import { useEffect, useState } from "react";
-import { useBeneficiary } from "../../hooks";
+import { useContext } from "react";
+import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
 
 function BeneficiarySelect() {
-  const [beneficiaryList, setBeneficiaryList] = useState([]);
-  useEffect(() => {
-    async function getAllBeneficiary() {
-      let data = await useBeneficiary();
-      setBeneficiaryList(data);
-    }
+  const { allBeneficiaries } = useContext(BeneficiaryContext);
 
-    getAllBeneficiary();
-  }, []);
   return (
     <>
       <label htmlFor="beneficiary"> Choose Beneficiary : </label>
       <select name="beneficiary" id="to" defaultValue="Choose one">
         <option hidden>Choose</option>
-        {beneficiaryList.map((beneficiary) => (
+        {allBeneficiaries.map((beneficiary) => (
           <option key={beneficiary.gstin} value={beneficiary._id}>
             {beneficiary.name}
           </option>

@@ -1,11 +1,13 @@
-import styles from "./Beneficiary.module.css";
+import { useState, useContext } from "react";
+import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
+import { useFetch } from "../../hooks";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import EditModal from "./EditModal";
-import { useState } from "react";
-import { useFetch } from "../../hooks";
+import styles from "./Beneficiary.module.css";
 
 function BeneficiaryCard({ details }) {
+  const { dispatch } = useContext(BeneficiaryContext);
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -26,7 +28,7 @@ function BeneficiaryCard({ details }) {
             onClick={async () => {
               let response = await useFetch(`/api/beneficiary/delete/${details._id}`, "DELETE");
               console.log(response);
-              window.location.reload();
+              dispatch({ type: "DELETE", payload: details._id });
             }}
           >
             <MdDeleteForever />

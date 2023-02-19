@@ -1,8 +1,10 @@
-import React from "react";
+import { useContext } from "react";
 import styles from "./Beneficiary.module.css";
 import useFetch from "../../hooks/useFetch";
+import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
 
 export default function EditModal({ data, set }) {
+  const { dispatch } = useContext(BeneficiaryContext);
   return (
     <div className={`modal-container ${styles.modal}`}>
       <div className={styles.modalContent}>
@@ -21,7 +23,7 @@ export default function EditModal({ data, set }) {
           type="submit"
           onClick={() => {
             set(false);
-            handleSave(data._id);
+            handleSave(data._id, dispatch);
           }}
         >
           Save
@@ -34,7 +36,7 @@ export default function EditModal({ data, set }) {
   );
 }
 
-async function handleSave(id) {
+async function handleSave(id, dispatch) {
   let [gstin, name, phone, email, line1, line2, line3, pincode] = [
     "gstin",
     "name",
@@ -47,5 +49,6 @@ async function handleSave(id) {
   ].map((id) => document.querySelector(`#${id}`).value);
   let details = { gstin, name, phone, email, address: { line1, line2, line3, pincode } };
   let response = await useFetch(`/api/beneficiary/edit/${id}`, "PUT", details);
+  dispatch({ type: "EDIT", payload: { id, details } });
   console.log(response);
 }

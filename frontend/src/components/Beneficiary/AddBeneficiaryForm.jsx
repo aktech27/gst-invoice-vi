@@ -1,4 +1,7 @@
+import { useContext } from "react";
+import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
 import styles from "./Beneficiary.module.css";
+import { useFetch } from "../../hooks";
 
 function Fieldset({ group, nodes }) {
   return (
@@ -10,6 +13,23 @@ function Fieldset({ group, nodes }) {
 }
 
 function AddBeneficiaryForm({ children }) {
+  const { dispatch } = useContext(BeneficiaryContext);
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    let [gstin, name, phone, email, line1, line2, line3, pincode] = [
+      "gstin",
+      "name",
+      "phone",
+      "email",
+      "address1",
+      "address2",
+      "address3",
+      "pincode",
+    ].map((id) => document.querySelector(`#${id}`).value);
+    let details = { gstin, name, phone, email, address: { line1, line2, line3, pincode } };
+    let response = await useFetch("/api/beneficiary/new", "POST", details);
+    dispatch({ type: "ADD", payload: response.message.newBeneficiary });
+  }
   //children is array of BenenificiaryInput components
   return (
     <form className={styles.addForm} onSubmit={handleFormSubmit}>
@@ -21,27 +41,4 @@ function AddBeneficiaryForm({ children }) {
   );
 }
 
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  let [gstin, name, phone, email, line1, line2, line3, pincode] = [
-    "gstin",
-    "name",
-    "phone",
-    "email",
-    "address1",
-    "address2",
-    "address3",
-    "pincode",
-  ].map((id) => document.querySelector(`#${id}`).value);
-  let details = { gstin, name, phone, email, address: { line1, line2, line3, pincode } };
-  let response = await fetch("/api/beneficiary/new", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(details),
-  });
-  let result = await response.json();
-  console.log(result);
-}
 export default AddBeneficiaryForm;

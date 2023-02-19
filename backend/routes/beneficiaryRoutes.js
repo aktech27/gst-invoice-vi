@@ -15,9 +15,8 @@ router.post("/new", async (req, res) => {
       address,
       email,
     };
-    let newB = await new Beneficiary(data).save();
-    console.log(newB);
-    return res.status(200).json({ message: "Beneficiary Creation Successful" });
+    let newBeneficiary = await new Beneficiary(data).save();
+    return res.status(200).json({ message: "Beneficiary Creation Successful", newBeneficiary });
   } catch (error) {
     handleError("Beneficiary Creation Error", __filename, error);
     return res.status(500).json({ error: "Beneficiary Creation Error", description: error });

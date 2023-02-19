@@ -4,11 +4,14 @@ import App from "./App";
 import "./index.css";
 import "./Animations.css";
 import { LoadingContextProvider } from "./context/Provider/LoadingContext";
+import { BeneficiaryContextProvider } from "./context/Provider/BeneficiaryContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LoadingContextProvider>
-      <App />
+      <BeneficiaryContextProvider>
+        <App />
+      </BeneficiaryContextProvider>
     </LoadingContextProvider>
   </React.StrictMode>
 );

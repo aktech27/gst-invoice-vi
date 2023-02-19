@@ -1,22 +1,10 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { useBeneficiary } from "../hooks";
+import { useContext } from "react";
 import BeneficiaryCard from "../components/Beneficiary/BeneficiaryCard";
-import Loading from "../components/Loading";
-import { LoadingContext } from "../context/Provider/LoadingContext";
+import { BeneficiaryContext } from "../context/Provider/BeneficiaryContext";
 
 function Beneficiary() {
-  const [allBeneficiaries, setAllBeneficiaries] = useState([]);
-  const { isLoading, setIsLoading } = useContext(LoadingContext);
-  useEffect(() => {
-    async function getAllBeneficiary() {
-      let data = await useBeneficiary();
-      setAllBeneficiaries(data);
-      setIsLoading(false);
-    }
-    setIsLoading(true);
-    getAllBeneficiary();
-  }, []);
+  const { allBeneficiaries } = useContext(BeneficiaryContext);
   return (
     <>
       <h1>Manage Beneficiary</h1>
