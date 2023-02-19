@@ -1,23 +1,10 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
-import { useProducts } from "../hooks";
-import Loading from "../components/Loading";
+import { useContext } from "react";
 import ProductTable from "../components/Product/ProductTable";
-import { LoadingContext } from "../context/Provider/LoadingContext";
+import { ProductContext } from "../context/Provider/ProductContext";
 
 function Beneficiary() {
-  const [allProducts, setallProducts] = useState([]);
-  const { setIsLoading } = useContext(LoadingContext);
-
-  useEffect(() => {
-    async function getAllProducts() {
-      let data = await useProducts();
-      setallProducts(data);
-      setIsLoading(false);
-    }
-    setIsLoading(true);
-    getAllProducts();
-  }, []);
+  const { allProducts } = useContext(ProductContext);
   return (
     <>
       <h1>Products</h1>

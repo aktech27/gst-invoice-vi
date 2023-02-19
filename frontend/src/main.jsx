@@ -5,12 +5,15 @@ import "./index.css";
 import "./Animations.css";
 import { LoadingContextProvider } from "./context/Provider/LoadingContext";
 import { BeneficiaryContextProvider } from "./context/Provider/BeneficiaryContext";
+import { ProductContextProvider } from "./context/Provider/ProductContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LoadingContextProvider>
       <BeneficiaryContextProvider>
-        <App />
+        <ProductContextProvider>
+          <App />
+        </ProductContextProvider>
       </BeneficiaryContextProvider>
     </LoadingContextProvider>
   </React.StrictMode>

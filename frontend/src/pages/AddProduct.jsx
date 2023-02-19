@@ -1,10 +1,13 @@
+import { useContext } from "react";
+import { ProductContext } from "../context/Provider/ProductContext";
 import { useFetch } from "../hooks";
 
 function AddProduct() {
+  const { dispatch } = useContext(ProductContext);
   return (
     <div>
       <h1>Add Product</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e, dispatch)}>
         <input id="name" placeholder="Name" />
         <input id="group" placeholder="Group" defaultValue="General" />
         <input id="hsn" placeholder="HSN" />
@@ -21,13 +24,15 @@ function AddProduct() {
   );
 }
 
-async function handleSubmit(e) {
+async function handleSubmit(e, dispatch) {
   e.preventDefault();
   let [name, group, hsn, tax, rate] = ["name", "group", "hsn", "tax", "rate"].map(
     (id) => document.querySelector(`#${id}`).value
   );
   let details = { name, group, hsn: parseInt(hsn), tax, rate: parseFloat(rate) };
-  await useFetch("/api/product/new", "POST", details);
+  let { message } = await useFetch("/api/product/new", "POST", details);
+  console.log(message);
+  dispatch({ type: "ADD", payload: message.newProduct });
 }
 
 export default AddProduct;
