@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import styles from "./Product.module.css";
 import { useFetch } from "../../hooks";
 import { ProductContext } from "../../context/Provider/ProductContext";
+import { ToastContext } from "../../context/Provider/ToastContext";
 
 export default function EditModal({ data, set }) {
   const { dispatch } = useContext(ProductContext);
+  const { setShowToast, setToastContent } = useContext(ToastContext);
   return (
     <div className={`modal-container ${styles.modal}`}>
       <div className={styles.modalContent}>
@@ -20,7 +22,7 @@ export default function EditModal({ data, set }) {
           type="submit"
           onClick={() => {
             set(false);
-            handleSave(data._id, dispatch);
+            handleSave(data._id, dispatch, setShowToast, setToastContent);
           }}
         >
           Save
@@ -33,12 +35,13 @@ export default function EditModal({ data, set }) {
   );
 }
 
-async function handleSave(id, dispatch) {
+async function handleSave(id, dispatch, setShowToast, setToastContent) {
   let [name, hsn, rate, tax, group] = ["name", "hsn", "rate", "tax", "group"].map(
     (id) => document.querySelector(`#${id}`).value
   );
   let details = { name, hsn, rate, tax, group };
-  let { message } = await useFetch(`/api/product/edit/${id}`, "PUT", details);
-  console.log(message);
+  let response = await useFetch(`/api/product/edit/${id}`, "PUT", details);
   dispatch({ type: "EDIT", payload: { id, details } });
+  setToastContent({ message: response.message.message, type: "success" });
+  setShowToast(true);
 }

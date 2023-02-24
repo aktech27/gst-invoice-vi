@@ -2,9 +2,11 @@ import { useContext } from "react";
 import styles from "./Beneficiary.module.css";
 import useFetch from "../../hooks/useFetch";
 import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
+import { ToastContext } from "../../context/Provider/ToastContext";
 
 export default function EditModal({ data, set }) {
   const { dispatch } = useContext(BeneficiaryContext);
+  const { setShowToast, setToastContent } = useContext(ToastContext);
   return (
     <div className={`modal-container ${styles.modal}`}>
       <div className={styles.modalContent}>
@@ -23,7 +25,7 @@ export default function EditModal({ data, set }) {
           type="submit"
           onClick={() => {
             set(false);
-            handleSave(data._id, dispatch);
+            handleSave(data._id, dispatch, setShowToast, setToastContent);
           }}
         >
           Save
@@ -36,7 +38,7 @@ export default function EditModal({ data, set }) {
   );
 }
 
-async function handleSave(id, dispatch) {
+async function handleSave(id, dispatch, setShowToast, setToastContent) {
   let [gstin, name, phone, email, line1, line2, line3, pincode] = [
     "gstin",
     "name",
@@ -50,5 +52,6 @@ async function handleSave(id, dispatch) {
   let details = { gstin, name, phone, email, address: { line1, line2, line3, pincode } };
   let response = await useFetch(`/api/beneficiary/edit/${id}`, "PUT", details);
   dispatch({ type: "EDIT", payload: { id, details } });
-  console.log(response);
+  setShowToast(true);
+  setToastContent({ message: response.message.message, type: "success" });
 }

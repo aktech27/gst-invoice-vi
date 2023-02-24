@@ -65,3 +65,41 @@ button[type="submit"] {
   border-radius: 1rem;
   cursor: pointer;
 }
+
+.toast-container {
+  height: 60px;
+  aspect-ratio: 12/2;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  border-radius: 10px;
+  animation: appear-from-top 2.5s ease-in forwards;
+}
+.toast-container.success {
+  background-color: green;
+}
+.toast-container.error {
+  background-color: red;
+}
+.toast-content {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.toast-container button {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: larger;
+  font-weight: bold;
+  cursor: pointer;
+}

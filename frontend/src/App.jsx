@@ -4,12 +4,16 @@ import Navbar from "./components/Home/Navbar";
 import Loading from "./components/Loading";
 import { useContext } from "react";
 import { LoadingContext } from "./context/Provider/LoadingContext";
+import { ToastContext } from "./context/Provider/ToastContext";
+import Toast from "./components/Toast";
 
 function App() {
   const { isLoading } = useContext(LoadingContext);
+  const { showToast, toastContent } = useContext(ToastContext);
   return (
     <>
       {isLoading && <Loading />}
+      {showToast && <Toast message={toastContent.message} type={toastContent.type} />}
       <BrowserRouter>
         <Navbar />
         <Routes>

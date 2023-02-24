@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { ProductContext } from "../context/Provider/ProductContext";
+import { ToastContext } from "../context/Provider/ToastContext";
 import { useFetch } from "../hooks";
 
 function AddProduct() {
   const { dispatch } = useContext(ProductContext);
+  const { setShowToast, setToastContent } = useContext(ToastContext);
   return (
     <div>
       <h1>Add Product</h1>
-      <form onSubmit={(e) => handleSubmit(e, dispatch)}>
+      <form onSubmit={(e) => handleSubmit(e, dispatch, setShowToast, setToastContent)}>
         <input id="name" placeholder="Name" />
         <input id="group" placeholder="Group" defaultValue="General" />
         <input id="hsn" placeholder="HSN" />
@@ -24,15 +26,16 @@ function AddProduct() {
   );
 }
 
-async function handleSubmit(e, dispatch) {
+async function handleSubmit(e, dispatch, setShowToast, setToastContent) {
   e.preventDefault();
   let [name, group, hsn, tax, rate] = ["name", "group", "hsn", "tax", "rate"].map(
     (id) => document.querySelector(`#${id}`).value
   );
   let details = { name, group, hsn: parseInt(hsn), tax, rate: parseFloat(rate) };
-  let { message } = await useFetch("/api/product/new", "POST", details);
-  console.log(message);
-  dispatch({ type: "ADD", payload: message.newProduct });
+  let response = await useFetch("/api/product/new", "POST", details);
+  dispatch({ type: "ADD", payload: response.message.newProduct });
+  setToastContent({ message: response.message.message, type: "success" });
+  setShowToast(true);
 }
 
 export default AddProduct;

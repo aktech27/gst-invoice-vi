@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { BeneficiaryContext } from "../../context/Provider/BeneficiaryContext";
 import styles from "./Beneficiary.module.css";
 import { useFetch } from "../../hooks";
+import { ToastContext } from "../../context/Provider/ToastContext";
 
 function Fieldset({ group, nodes }) {
   return (
@@ -14,6 +15,7 @@ function Fieldset({ group, nodes }) {
 
 function AddBeneficiaryForm({ children }) {
   const { dispatch } = useContext(BeneficiaryContext);
+  const { setShowToast, setToastContent } = useContext(ToastContext);
   async function handleFormSubmit(e) {
     e.preventDefault();
     let [gstin, name, phone, email, line1, line2, line3, pincode] = [
@@ -29,6 +31,8 @@ function AddBeneficiaryForm({ children }) {
     let details = { gstin, name, phone, email, address: { line1, line2, line3, pincode } };
     let response = await useFetch("/api/beneficiary/new", "POST", details);
     dispatch({ type: "ADD", payload: response.message.newBeneficiary });
+    setToastContent({ message: response.message.message, type: "success" });
+    setShowToast(true);
   }
   //children is array of BenenificiaryInput components
   return (

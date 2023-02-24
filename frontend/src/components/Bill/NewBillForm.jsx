@@ -3,6 +3,7 @@ import { useFetch } from "../../hooks";
 import newBill from "../../assets/newbill.png";
 import { useContext } from "react";
 import { LoadingContext } from "../../context/Provider/LoadingContext";
+import { ToastContext } from "../../context/Provider/ToastContext";
 
 function Fieldset({ group, nodes, className }) {
   return (
@@ -15,6 +16,7 @@ function Fieldset({ group, nodes, className }) {
 
 function NewBillForm({ children }) {
   const { setIsLoading } = useContext(LoadingContext);
+  const { setShowToast, setToastContent } = useContext(ToastContext);
   async function handleFormSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -56,6 +58,8 @@ function NewBillForm({ children }) {
       method: "GET",
     }).then((res) => res.blob());
     setIsLoading(false);
+    setToastContent({ message: "Bill Generated.Downloading...", type: "success" });
+    setShowToast(true);
     let alink = document.createElement("a");
     alink.href = window.URL.createObjectURL(blob);
     alink.download = `Invoice-${res.message.data.number.toString().padStart(3, "0")}.pdf`;

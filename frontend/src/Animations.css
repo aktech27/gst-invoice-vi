@@ -158,3 +158,16 @@
     transform: rotate(1turn);
   }
 }
+
+@keyframes appear-from-top {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  20%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
