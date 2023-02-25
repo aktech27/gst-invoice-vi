@@ -6,6 +6,13 @@
   cursor: pointer;
 }
 
+.productTable thead,
+.productTable tfoot {
+  background-color: #6666ff;
+  color: white;
+  cursor: default;
+}
+
 .productTable td,
 .productTable th {
   border: 1px solid #ddd;
@@ -16,7 +23,7 @@
   background-color: #d6d6f4;
 }
 
-.productTable tr:hover {
+.productTable tbody tr:hover {
   background-color: #bfbfff;
 }
 
@@ -24,11 +31,14 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #6666ff;
-  color: white;
   text-align: center;
   text-transform: uppercase;
-  cursor: default;
+}
+
+.tableFooter {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .modal {

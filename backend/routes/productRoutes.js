@@ -18,8 +18,21 @@ router.get("/groups", async (req, res) => {
 });
 
 router.get("/view", async (req, res) => {
-  let allProducts = await Product.find({});
-  res.status(200).json({ data: allProducts });
+  let { currentPage, maxPerPage } = req.query;
+  currentPage = parseInt(currentPage) || 1;
+  maxPerPage = parseInt(maxPerPage) || 10;
+
+  let totalProducts = await Product.count();
+  let maxPagesPossible = Math.ceil(totalProducts / maxPerPage);
+
+  if (currentPage > maxPagesPossible || currentPage < 1)
+    return res.status(422).json({ error: "Invalid Page number" });
+
+  let allProducts = await Product.find({})
+    .sort({ name: "asc" })
+    .limit(maxPerPage)
+    .skip((currentPage - 1) * maxPerPage);
+  res.status(200).json({ data: allProducts, maxPagesPossible });
 });
 
 router.put("/edit/:id", async (req, res) => {

@@ -1,6 +1,6 @@
 export const productReducer = (state, action) => {
   switch (action.type) {
-    case "LOAD_ALL":
+    case "LOAD":
       return action.payload;
 
     case "ADD":
