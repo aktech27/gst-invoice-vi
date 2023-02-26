@@ -13,6 +13,7 @@ function Navbar() {
         <Link to="/beneficiary">Beneficiary</Link>
         <Link to="/product">Product</Link>
         <Link to="/bill/new">Invoice</Link>
+        <Link to="/dc/new">DC</Link>
       </div>
     </nav>
   );

@@ -4,3 +4,4 @@ export { default as Products } from "./Products";
 export { default as AddBeneficiary } from "./AddBeneficiary";
 export { default as AddProduct } from "./AddProduct";
 export { default as NewBill } from "./NewBill";
+export { default as NewDC } from "./NewDC";

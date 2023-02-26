@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useFetch, useProducts } from "../../hooks";
 import styles from "./Bill.module.css";
 
-function ProductInput({ products }) {
+function ProductInput({ products, type }) {
   return (
     <div className={styles.productGroup}>
       <select name="products" defaultValue="Select Product">
@@ -14,12 +14,13 @@ function ProductInput({ products }) {
         ))}
       </select>
       <input type="text" className="quantity" placeholder="Quantity" />
-      <input type="text" className="rate" placeholder="Rate" />
+      <input type="text" className="rate" placeholder={type} />
     </div>
   );
 }
 
-function ProductGroup() {
+function ProductGroup({ type }) {
+  type = type || "Rate"; //For Dc it will value otherwise rate
   const groupSelector = useRef();
   const [allProducts, setAllProducts] = useState([]);
   const [filter, setFilter] = useState(false);
@@ -43,6 +44,7 @@ function ProductGroup() {
           key={productInput.length}
           products={allProducts}
           groupSelector={groupSelector}
+          type={type}
         />,
       ];
     });

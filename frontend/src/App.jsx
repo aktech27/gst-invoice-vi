@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Beneficiary, NewBill, AddBeneficiary, Products, AddProduct } from "./pages";
+import { Home, Beneficiary, NewBill, AddBeneficiary, Products, AddProduct, NewDC } from "./pages";
 import Navbar from "./components/Home/Navbar";
 import Loading from "./components/Loading";
 import { useContext } from "react";
@@ -23,6 +23,7 @@ function App() {
           <Route path="/product/add" element={<AddProduct />} />
           <Route exact path="/beneficiary/add" element={<AddBeneficiary />} />
           <Route exact path="/bill/new" element={<NewBill />} />
+          <Route exact path="/dc/new" element={<NewDC />} />
         </Routes>
       </BrowserRouter>
     </>
