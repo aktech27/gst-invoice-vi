@@ -18,8 +18,23 @@ router.post("/new", async (req, res) => {
 });
 
 router.get("/view", async (req, res) => {
-  let data = await Bill.find({}).populate("to").populate("products.item").exec();
-  console.log(data);
+  //Till March, falls under previous financial year
+  let startYear =
+    new Date().getMonth() <= 2 ? new Date().getFullYear() - 1 : new Date().getFullYear();
+  let endYear = startYear + 1;
+
+  // Current Financial Year
+  let startDate = new Date(startYear, 3, 1);
+  let endDate = new Date(endYear, 2, 31);
+  let data = await Bill.find({
+    date: {
+      $gte: startDate,
+      $lte: endDate,
+    },
+  })
+    .populate("to")
+    .populate("products.item")
+    .exec();
   res.status(200).json({ data });
 });
 

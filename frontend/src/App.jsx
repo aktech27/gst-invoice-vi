@@ -1,5 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Beneficiary, NewBill, AddBeneficiary, Products, AddProduct, NewDC } from "./pages";
+import {
+  Home,
+  Beneficiary,
+  NewBill,
+  AddBeneficiary,
+  Products,
+  AddProduct,
+  NewDC,
+  Invoice,
+} from "./pages";
 import Navbar from "./components/Home/Navbar";
 import Loading from "./components/Loading";
 import { useContext } from "react";
@@ -19,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/beneficiary" element={<Beneficiary />} />
+          <Route path="/invoice/" element={<Invoice />} />
           <Route path="/product" element={<Products />} />
           <Route path="/product/add" element={<AddProduct />} />
           <Route exact path="/beneficiary/add" element={<AddBeneficiary />} />
