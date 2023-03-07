@@ -32,9 +32,12 @@ app.use("/api/dc", require("./routes/dcRoutes"));
 
 app.use(express.static("build"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
-});
+if (process.env.CONN !== "DEV") {
+  console.log("running");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  });
+}
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port:${process.env.PORT}`);

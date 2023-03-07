@@ -63,6 +63,7 @@ const viewInvoices = async (req, res) => {
 
 const billNumber = async (req, res) => {
   let recentBillNo = await Bill.find().sort({ number: -1 }).limit(1).select("number");
+  if (!recentBillNo.length) return res.status(200).json({ billNo: 0 }); //No bills as of now
   return res.status(200).json({ billNo: recentBillNo[0].number });
 };
 

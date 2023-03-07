@@ -24,6 +24,7 @@ router.get("/view", async (req, res) => {
 
 router.get("/dcnumber", async (req, res) => {
   let recentDCNo = await DC.find().sort({ number: -1 }).limit(1).select("number");
+  if (!recentDCNo.length) return res.status(200).json({ dcNo: 0 }); //No DCs as of now
   return res.status(200).json({ dcNo: recentDCNo[0].number });
 });
 
