@@ -7,7 +7,7 @@ mongoose.set("strictQuery", true);
 
 //Connect to database
 mongoose
-  .connect(process.env.DB_URI_TEST)
+  .connect(process.env.DB_URI)
   .then(() => {
     console.log("Connect to DB");
   })
@@ -31,9 +31,9 @@ app.use("/api/dc", require("./routes/dcRoutes"));
 
 app.use(express.static("build"));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(pajth.resolve(__dirname, "build", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(pajth.resolve(__dirname, "build", "index.html"));
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port:${process.env.PORT}`);
