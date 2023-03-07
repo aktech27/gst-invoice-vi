@@ -11,7 +11,7 @@ function handleErrorResponse(errorTitle = "Error in Bill route", error, res) {
   return res.status(500).json({ error: errorTitle, description: error });
 }
 
-function groupProductsByHSN(products) {
+function groupProductsByHSN(products, tax) {
   let groupByHsn = new Object();
   products.forEach((product) => {
     if (groupByHsn.hasOwnProperty(product.item.hsn)) {
@@ -106,7 +106,7 @@ const downloadInvoice = async (req, res) => {
     taxtotal: total * 0.18,
     grandtotal: { rs: total + total * 0.18, p: "00" },
   };
-  let groupByHsn = groupProductsByHSN(data.products);
+  let groupByHsn = groupProductsByHSN(data.products, tax);
   const hbsTemplate = fs.readFileSync(`${process.cwd()}/template/bill-template-test.hbs`, "utf8");
   const html = await hbsCompiler(hbsTemplate, { details: { ...data, ...others, groupByHsn } });
   let billNo = data.number.toString().padStart(3, "0");
