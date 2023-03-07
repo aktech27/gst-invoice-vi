@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 
 require("./misc/errorHandler");
 require("dotenv").config();
@@ -32,7 +33,7 @@ app.use("/api/dc", require("./routes/dcRoutes"));
 app.use(express.static("build"));
 
 app.get("*", (req, res) => {
-  res.sendFile(pajth.resolve(__dirname, "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
 });
 
 app.listen(process.env.PORT, () => {
