@@ -8,7 +8,7 @@ mongoose.set("strictQuery", true);
 
 //Connect to database
 mongoose
-  .connect(process.env.DB_URI)
+  .connect(process.env.DB_URI_TEST)
   .then(() => {
     console.log("Connect to DB");
   })

@@ -94,9 +94,26 @@
         width: 90px;
         aspect-ratio: 1;
       }
+      .tax-details td,
+      .amount td{
+        text-align: right;
+      }
       .beneficiary-gstin {
         font-size: 24px;
         letter-spacing: 1px;
+      }
+      .bottom{
+        height: 100px;
+      }
+      .bottom .signature-container{
+        position: relative;
+        font-size: 14px;       
+      }
+      .bottom .signature-container div{
+        position: absolute;
+        width: max-content;
+        left: 50%;
+        transform: translateX(-50%);
       }
       footer {
         font-size: small;
@@ -153,7 +170,7 @@
               <td><b>PARTY DC : </b>{{details.dc.party}}</td>
             </tr>
             <tr class="beneficiary-details">
-              <td><b>YEAR :</b> 2022 - 2023</td>
+              <td><b>YEAR :</b> {{financialYear details.date}}</td>
             </tr>
             <tr class="beneficiary-details">
               <td><b>DATE :</b> {{dateFormat details.date}}</td>
@@ -211,35 +228,35 @@
                 <span>IFSC : IDIB000M172</span><br />
                 <span>Branch : Medavakkam</span><br />
               </td>
-              <td colspan="2">TOTAL</td>
-              <td>{{details.subtotal.rs}}</td>
-              <td>{{details.subtotal.p}}</td>
+              <td style="text-align: right" colspan="2">TOTAL</td>
+              <td style="text-align: right">{{details.subtotal.rs}}</td>
+              <td style="text-align: right">{{details.subtotal.p}}</td>
             </tr>
-            <tr>
+            <tr class="amount">
               <td colspan="2">
-                CGST <span style="text-align: right; font-weight: bold">{{details.tax.cgst}}%</span>
+                CGST <span style="font-weight: bold">{{details.tax.cgst}}%</span>
               </td>
               <td>{{details.cgst.rs}}</td>
               <td>{{details.cgst.p}}</td>
             </tr>
-            <tr>
+            <tr class="amount">
               <td colspan="2">
-                SGST <span style="text-align: right; font-weight: bold">{{details.tax.sgst}}%</span>
+                SGST <span style="font-weight: bold">{{details.tax.sgst}}%</span>
               </td>
               <td>{{details.sgst.rs}}</td>
               <td>{{details.sgst.p}}</td>
             </tr>
-            <tr>
+            <tr class="amount">
               <td colspan="2">
-                IGST <span style="text-align: right; font-weight: bold">{{details.tax.igst}}%</span>
+                IGST <span style="font-weight: bold">{{details.tax.igst}}%</span>
               </td>
               <td>{{details.igst.rs}}</td>
               <td>{{details.igst.p}}</td>
             </tr>
-            <tr>
-              <td colspan="2">GRAND TOTAL(round)</td>
-              <td>{{details.grandtotal.rs}}</td>
-              <td>{{details.grandtotal.p}}</td>
+            <tr class="amount">
+              <td style="text-align: left" colspan="2">GRAND TOTAL(round)</td>
+              <td style="font-weight: bold">{{details.grandtotal.rs}}</td>
+              <td style="font-weight: bold">{{details.grandtotal.p}}</td>
             </tr>
           </tbody>
         </table>
@@ -277,9 +294,12 @@
             <tr>
               <td colspan="9">Tax Amount(in words) : {{num2words details.taxtotal}}</td>
             </tr>
-            <tr>
-              <td colspan="7">Rupees : {{num2words details.grandtotal.rs}}</td>
-              <td colspan="2">For <b>VICTORY INDUSTRIES</b></td>
+            <tr class="bottom">
+              <td colspan="6">Rupees : {{num2words details.grandtotal.rs}}</td>
+              <td class="signature-container" colspan="3">
+                <div style="top:0">For <b>VICTORY INDUSTRIES</b></div>
+                <div style="bottom:0">Authorised Signatory</div>
+              </td>
             </tr>
           </tbody>
         </table>

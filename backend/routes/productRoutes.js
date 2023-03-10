@@ -35,6 +35,11 @@ router.get("/view", async (req, res) => {
   res.status(200).json({ data: allProducts, maxPagesPossible });
 });
 
+router.get("/all", async (req, res) => {
+  let allProducts = await Product.find({});
+  res.status(200).json({ data: allProducts });
+});
+
 router.put("/edit/:id", async (req, res) => {
   try {
     const { id } = req.params;

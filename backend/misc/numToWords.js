@@ -51,19 +51,23 @@ const inWords = (number) => {
 };
 
 function numToWords(currency) {
-  console.log(currency);
   if (currency > 99) {
     let result = "";
 
     let [tens, hundred, thousand, lakh, crore] = formatToArray(currency.toString().split(".")[0]);
+    let paise = currency.toString().split(".")[1];
     if (crore && crore != "00") result += `${inWords(crore)} Crores `;
     if (lakh && lakh != "00") result += `${inWords(lakh)} Lakhs `;
     if (thousand && thousand != "00") result += `${inWords(thousand)} Thousand `;
     if (hundred && hundred != "0") result += `${inWords(hundred)} Hundred `;
     if (tens && tens != "00") result += `and ${inWords(tens)}`;
-    return result + " rupees only";
+    result += " rupees ";
+    if (paise && paise != "00") result += `and ${inWords(paise)} paise`;
+    return result + " only";
   } else {
-    return inWords(currency) + " rupees only";
+    let result = inWords(currency) + " rupees ";
+    if (paise && paise != "00") result += `and ${inWords(paise)} paise`;
+    return result + " only";
   }
 }
 

@@ -57,7 +57,11 @@ export default function ProductTable({ allProducts }) {
               <div className={styles.tableFooter}>
                 {[...Array(maxPages).keys()].map((page) => {
                   return (
-                    <div key={page} onClick={() => handlePageClick(page + 1)}>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      key={page}
+                      onClick={() => handlePageClick(page + 1)}
+                    >
                       {page + 1}
                     </div>
                   );

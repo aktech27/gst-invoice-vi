@@ -23,6 +23,40 @@ function groupProductsByHSN(products, tax) {
   return groupByHsn;
 }
 
+function calculateGST(total, gst) {
+  let amount = (total * (gst / 100)).toFixed(2);
+  let [rs, p] = amount.split(".");
+  return {
+    rs,
+    p,
+  };
+}
+
+function calculateTaxTotal(...taxes) {
+  return taxes.reduce(
+    (accumulator, tax) => accumulator + parseFloat(tax.rs) + parseFloat(tax.p / 100),
+    0.0
+  );
+}
+
+function computeGSTAndTotals(total, tax) {
+  let cgst = calculateGST(total, tax.cgst);
+  let sgst = calculateGST(total, tax.sgst);
+  let igst = calculateGST(total, tax.igst);
+  let taxtotal = calculateTaxTotal(cgst, sgst, igst);
+  let grand = Math.floor(total + taxtotal);
+  return {
+    cgst,
+    sgst,
+    igst,
+    taxtotal,
+    grandtotal: {
+      rs: grand,
+      p: "00",
+    },
+  };
+}
+
 async function queryBill(options = {}, lean = false) {
   // returns array
   return await Bill.find(options).lean(lean).populate("to").populate("products.item").exec();
@@ -74,7 +108,6 @@ const previewInvoice = async (req, res) => {
 
 const downloadInvoice = async (req, res) => {
   let [data] = await queryBill({ _id: req.params.id }, true);
-  console.log(data);
   data.number = data.number.toString().padStart(3, "0");
   let total = data.products.reduce((accumulator, product) => accumulator + product.amount, 0);
 
@@ -91,20 +124,7 @@ const downloadInvoice = async (req, res) => {
     css: { blankSpace: `${40 * data.products.length}px` },
     subtotal: { rs: total, p: "00" },
     tax,
-    cgst: {
-      rs: total * (tax.cgst / 100),
-      p: "00",
-    },
-    sgst: {
-      rs: total * (tax.sgst / 100),
-      p: "00",
-    },
-    igst: {
-      rs: total * (tax.igst / 100),
-      p: "00",
-    },
-    taxtotal: total * 0.18,
-    grandtotal: { rs: total + total * 0.18, p: "00" },
+    ...computeGSTAndTotals(total, tax),
   };
   let groupByHsn = groupProductsByHSN(data.products, tax);
   const hbsTemplate = fs.readFileSync(`${process.cwd()}/template/bill-template-test.hbs`, "utf8");
