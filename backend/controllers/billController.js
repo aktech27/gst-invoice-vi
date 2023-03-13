@@ -85,14 +85,24 @@ const generateNew = async (req, res) => {
 };
 
 const viewInvoices = async (req, res) => {
-  let { startDate, endDate } = getFinancialYear();
-  let data = await queryBill({
-    date: {
-      $gte: startDate,
-      $lte: endDate,
-    },
-  });
-  res.status(200).json({ data });
+  try {
+    let { startDate, endDate } = getFinancialYear();
+    if (req.query.startDate && req.query.endDate) {
+      startDate = new Date(req.query.startDate);
+      endDate = new Date(req.query.endDate);
+    }
+    let queryOptions = {
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    };
+    if (req.query.billedTo) queryOptions["to"] = req.query.billedTo;
+    let data = await queryBill(queryOptions);
+    res.status(200).json({ data });
+  } catch (error) {
+    handleErrorResponse("Unable to apply filters", error, res);
+  }
 };
 
 const billNumber = async (req, res) => {
