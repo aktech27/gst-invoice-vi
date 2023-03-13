@@ -1,62 +1,21 @@
-const Product = require("../models/Products");
+const {
+  newProduct,
+  getProductGroups,
+  getProductsByPage,
+  getAllProducts,
+  editProduct,
+} = require("../controllers/productController");
+
 const router = require("express").Router();
 
-router.post("/new", async (req, res) => {
-  try {
-    let { name, hsn, rate, tax, group } = req.body;
-    let newProduct = await new Product({ name, hsn, rate, tax, group }).save();
-    return res.status(200).json({ message: "Product Creation Successful", newProduct });
-  } catch (error) {
-    handleError("Product Creation Error", __filename, error);
-    return res.status(500).json({ error: "Error" });
-  }
-});
+router.post("/new", newProduct);
 
-router.get("/groups", async (req, res) => {
-  let groupsArray = await Product.distinct("group");
-  return res.status(200).json(groupsArray);
-});
+router.get("/groups", getProductGroups);
 
-router.get("/view", async (req, res) => {
-  let { currentPage, maxPerPage } = req.query;
-  currentPage = parseInt(currentPage) || 1;
-  maxPerPage = parseInt(maxPerPage) || 10;
+router.get("/view", getProductsByPage);
 
-  let totalProducts = await Product.count();
-  let maxPagesPossible = Math.ceil(totalProducts / maxPerPage);
+router.get("/all", getAllProducts);
 
-  if (currentPage > maxPagesPossible || currentPage < 1)
-    return res.status(422).json({ error: "Invalid Page number" });
-
-  let allProducts = await Product.find({})
-    .sort({ name: "asc" })
-    .limit(maxPerPage)
-    .skip((currentPage - 1) * maxPerPage);
-  res.status(200).json({ data: allProducts, maxPagesPossible });
-});
-
-router.get("/all", async (req, res) => {
-  let allProducts = await Product.find({});
-  res.status(200).json({ data: allProducts });
-});
-
-router.put("/edit/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    let { name, hsn, rate, tax, group } = req.body;
-    let data = {
-      name,
-      hsn,
-      rate,
-      tax,
-      group,
-    };
-    await Product.updateOne({ _id: id }, data).exec();
-    return res.status(200).json({ message: "Product Updated Successfully" });
-  } catch (error) {
-    handleError("Product Updation Error", __filename, error);
-    return res.status(500).json({ error: "Product Updation Error", description: error });
-  }
-});
+router.put("/edit/:id", editProduct);
 
 module.exports = router;
