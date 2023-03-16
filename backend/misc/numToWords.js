@@ -65,7 +65,8 @@ function numToWords(currency) {
     if (paise && paise != "00") result += `and ${inWords(paise)} paise`;
     return result + " only";
   } else {
-    let result = inWords(currency) + " rupees ";
+    let result = inWords(currency.toString().split(".")[0]) + " rupees ";
+    let paise = currency.toString().split(".")[1];
     if (paise && paise != "00") result += `and ${inWords(paise)} paise`;
     return result + " only";
   }

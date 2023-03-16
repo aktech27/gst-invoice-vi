@@ -43,7 +43,7 @@ function computeGSTAndTotals(total, tax) {
   let sgst = calculateGST(total, tax.sgst);
   let igst = calculateGST(total, tax.igst);
   let taxtotal = calculateTaxTotal(cgst, sgst, igst);
-  let grand = Math.floor(total + taxtotal);
+  let grand = Math.floor(parseFloat(total) + parseFloat(taxtotal));
   return {
     cgst,
     sgst,
@@ -125,31 +125,34 @@ const previewInvoice = async (req, res) => {
 };
 
 const downloadInvoice = async (req, res) => {
-  let [data] = await queryBill({ _id: req.params.id }, true);
-  data.number = data.number.toString().padStart(3, "0");
-  let total = data.products.reduce((accumulator, product) => accumulator + product.amount, 0);
+  try {
+    let [data] = await queryBill({ _id: req.params.id }, true);
+    data.number = data.number.toString().padStart(3, "0");
+    let total = data.products.reduce((accumulator, product) => accumulator + product.amount, 0);
+    let tax =
+      data.to.gstin.substring(0, 2) === "33"
+        ? {
+            sgst: 9,
+            cgst: 9,
+            igst: 0,
+          }
+        : { sgst: 0, cgst: 0, igst: 18 };
 
-  let tax =
-    data.to.gstin.substring(0, 2) === "33"
-      ? {
-          sgst: 9,
-          cgst: 9,
-          igst: 0,
-        }
-      : { sgst: 0, cgst: 0, igst: 18 };
-
-  let others = {
-    css: { blankSpace: `${40 * data.products.length}px` },
-    subtotal: { rs: total, p: "00" },
-    tax,
-    ...computeGSTAndTotals(total, tax),
-  };
-  let groupByHsn = groupProductsByHSN(data.products, tax);
-  const hbsTemplate = fs.readFileSync(`${process.cwd()}/template/bill-template-test.hbs`, "utf8");
-  const html = await hbsCompiler(hbsTemplate, { details: { ...data, ...others, groupByHsn } });
-  let billNo = data.number.toString().padStart(3, "0");
-  await generatePDF(html, billNo);
-  res.download(`${process.cwd()}/output/Invoice-${billNo}.pdf`);
+    let others = {
+      css: { blankSpace: `${40 * data.products.length}px` },
+      subtotal: { rs: total.toFixed(2).split(".")[0], p: total.toFixed(2).split(".")[1] },
+      tax,
+      ...computeGSTAndTotals(total, tax),
+    };
+    let groupByHsn = groupProductsByHSN(data.products, tax);
+    const hbsTemplate = fs.readFileSync(`${process.cwd()}/template/bill-template-test.hbs`, "utf8");
+    const html = await hbsCompiler(hbsTemplate, { details: { ...data, ...others, groupByHsn } });
+    let billNo = data.number.toString().padStart(3, "0");
+    await generatePDF(html, billNo);
+    res.download(`${process.cwd()}/output/Invoice-${billNo}.pdf`);
+  } catch (error) {
+    handleErrorResponse("Error in Bill Genereation", error, res);
+  }
 };
 
 module.exports = { generateNew, viewInvoices, billNumber, previewInvoice, downloadInvoice };

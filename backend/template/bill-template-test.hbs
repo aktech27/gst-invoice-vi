@@ -205,10 +205,10 @@
               <td>{{this.item.name}}</td>
               <td>{{this.item.hsn}}</td>
               <td>{{this.quantity}}</td>
-              <td>{{this.rate}}</td>
-              <td>00</td>
-              <td>{{this.amount}}</td>
-              <td>00</td>
+              <td>{{extractRS this.rate}}</td>
+              <td>{{extractP this.rate}}</td>
+              <td>{{extractRS this.amount}}</td>
+              <td>{{extractP this.amount}}</td>
             </tr>
             {{/each}}
             <tr class="product-details-empty">

@@ -26,6 +26,9 @@ hbs.registerHelper("financialYear", (date) => {
   return `${startYear} - ${endYear}`;
 });
 
+hbs.registerHelper("extractRS", (number) => parseFloat(number).toFixed(2).split(".")[0]);
+hbs.registerHelper("extractP", (number) => parseFloat(number).toFixed(2).split(".")[1]);
+
 hbs.registerHelper("calculateTax", (amount, rate) => {
   return (amount * (rate / 100)).toFixed(2);
 });
