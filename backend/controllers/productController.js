@@ -51,7 +51,7 @@ const getProductsByPage = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    let allProducts = await Product.find({});
+    let allProducts = await Product.find({}).sort({ name: 1 });
     res.status(200).json({ data: allProducts });
   } catch (error) {
     handleErrorResponse("Unable to get All Products", error, res);
