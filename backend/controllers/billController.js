@@ -62,10 +62,12 @@ async function queryBill(options = {}, lean = false) {
   return await Bill.find(options).lean(lean).populate("to").populate("products.item").exec();
 }
 
-function getFinancialYear() {
+function getFinancialYear(billDate = Date.now()) {
   //Till March, falls under previous financial year
   let startYear =
-    new Date().getMonth() <= 2 ? new Date().getFullYear() - 1 : new Date().getFullYear();
+    new Date(billDate).getMonth() <= 2
+      ? new Date(billDate).getFullYear() - 1
+      : new Date(billDate).getFullYear();
   let endYear = startYear + 1;
 
   // Current Financial Year
@@ -106,7 +108,14 @@ const viewInvoices = async (req, res) => {
 };
 
 const billNumber = async (req, res) => {
-  let recentBillNo = await Bill.find().sort({ number: -1 }).limit(1).select("number");
+  let { startDate, endDate } = getFinancialYear(req.query.billDate);
+  let option = {
+    date: {
+      $gte: startDate,
+      $lte: endDate,
+    },
+  };
+  let recentBillNo = await Bill.find(option).sort({ number: -1 }).limit(1).select("number");
   if (!recentBillNo.length) return res.status(200).json({ billNo: 0 }); //No bills as of now
   return res.status(200).json({ billNo: recentBillNo[0].number });
 };
