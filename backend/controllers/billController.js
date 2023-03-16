@@ -33,10 +33,9 @@ function calculateGST(total, gst) {
 }
 
 function calculateTaxTotal(...taxes) {
-  return taxes.reduce(
-    (accumulator, tax) => accumulator + parseFloat(tax.rs) + parseFloat(tax.p / 100),
-    0.0
-  );
+  return taxes
+    .reduce((accumulator, tax) => accumulator + parseFloat(tax.rs) + parseFloat(tax.p / 100), 0.0)
+    .toFixed(2);
 }
 
 function computeGSTAndTotals(total, tax) {
