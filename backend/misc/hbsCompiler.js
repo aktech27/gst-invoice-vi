@@ -38,6 +38,12 @@ hbs.registerHelper("calculateTotalTax", (amount, tax) => {
   ).toFixed(2);
 });
 
+hbs.registerHelper("deliveryAt", (deliveryAt) => {
+  if (deliveryAt) {
+    return `Delivery At : ${deliveryAt}`;
+  }
+});
+
 module.exports = async (hbsTemplate, data) => {
   return hbs.compile(hbsTemplate)(data);
 };

@@ -76,8 +76,8 @@ function getFinancialYear() {
 
 const generateNew = async (req, res) => {
   try {
-    let { number, date, to, products, vehicle, dc } = req.body;
-    let newBill = await new Bill({ number, date, to, products, vehicle, dc }).save();
+    let { number, date, to, products, vehicle, dc, deliveryAt } = req.body;
+    let newBill = await new Bill({ number, date, to, products, vehicle, dc, deliveryAt }).save();
     return res.status(200).json({ message: "Bill Creation Successful", data: newBill });
   } catch (error) {
     handleErrorResponse("Bill Creation Error", error, res);

@@ -213,7 +213,7 @@
             {{/each}}
             <tr class="product-details-empty">
               <td></td>
-              <td></td>
+              <td>{{deliveryAt details.deliveryAt}}</td>
               <td></td>
               <td></td>
               <td></td>
@@ -282,11 +282,11 @@
             <tr class="tax-details">
               <td>{{@key}}</td>
               <td>{{this.amount}}</td>
-              <td>{{this.tax.cgst}}</td>
+              <td>{{this.tax.cgst}} %</td>
               <td>{{calculateTax this.amount this.tax.cgst}}</td>
-              <td>{{this.tax.sgst}}</td>
+              <td>{{this.tax.sgst}} %</td>
               <td>{{calculateTax this.amount this.tax.sgst}}</td>
-              <td>{{this.tax.igst}}</td>
+              <td>{{this.tax.igst}} %</td>
               <td>{{calculateTax this.amount this.tax.igst}}</td>
               <td>{{calculateTotalTax this.amount this.tax}}</td>
             </tr>

@@ -8,17 +8,13 @@ mongoose.set("strictQuery", true);
 
 //Connect to database
 mongoose
-  .connect(process.env.DB_URI_TEST)
+  .connect(process.env.DB_URI)
   .then(() => {
     console.log("Connect to DB");
   })
   .catch((e) => {
     handleError("Database Connection Error", __filename, e);
   });
-
-const myFunc = async () => {};
-
-//myFunc();
 
 const app = express();
 
@@ -33,7 +29,6 @@ app.use("/api/dc", require("./routes/dcRoutes"));
 app.use(express.static("build"));
 
 if (process.env.CONN !== "DEV") {
-  console.log("running");
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });

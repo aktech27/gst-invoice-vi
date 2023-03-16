@@ -18,6 +18,8 @@ function BeneficiarySelect() {
           </option>
         ))}
       </select>
+      <label htmlFor="deliveryAt"> Delivery At :</label>
+      <input type="text" id="deliveryAt" />
     </>
   );
 }

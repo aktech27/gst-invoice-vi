@@ -1,4 +1,3 @@
-const { log } = require("handlebars");
 const mongoose = require("mongoose");
 
 const billSchema = new mongoose.Schema({
@@ -19,6 +18,7 @@ const billSchema = new mongoose.Schema({
       amount: { type: Number, default: calculateAmount },
     },
   ],
+  deliveryAt: { type: String, default: null },
 });
 
 function calculateAmount() {

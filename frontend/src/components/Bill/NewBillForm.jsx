@@ -20,16 +20,16 @@ function NewBillForm({ children }) {
   async function handleFormSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    let [number, date, to, vehicle, ourdc, partydc] = [
+    let [number, date, to, vehicle, ourdc, partydc, deliveryAt] = [
       "number",
       "date",
       "to",
       "vehicle",
       "ourdc",
       "partydc",
+      "deliveryAt",
     ].map((id) => document.querySelector(`#${id}`).value);
     let productList = document.querySelectorAll("#product-list div");
-    console.log(productList);
 
     let products = new Array();
 
@@ -48,6 +48,7 @@ function NewBillForm({ children }) {
       to,
       vehicle,
       products,
+      deliveryAt,
       dc: {
         ours: ourdc,
         party: partydc,
