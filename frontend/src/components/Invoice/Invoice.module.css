@@ -1,0 +1,35 @@
+.invoiceTable {
+  border-collapse: collapse;
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  overflow-x: scroll;
+}
+
+.invoiceTable thead,
+.invoiceTable tfoot {
+  background-color: #6666ff;
+  color: white;
+  cursor: default;
+}
+
+.invoiceTable td,
+.invoiceTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.invoiceTable tr:nth-child(even) {
+  background-color: #d6d6f4;
+}
+
+.invoiceTable tbody tr:hover {
+  background-color: #bfbfff;
+}
+
+.invoiceTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-align: center;
+  text-transform: uppercase;
+}

@@ -4,6 +4,7 @@ import newBill from "../../assets/newbill.png";
 import { useContext } from "react";
 import { LoadingContext } from "../../context/Provider/LoadingContext";
 import { ToastContext } from "../../context/Provider/ToastContext";
+import { useNavigate } from "react-router-dom";
 
 function Fieldset({ group, nodes, className }) {
   return (
@@ -15,6 +16,7 @@ function Fieldset({ group, nodes, className }) {
 }
 
 function NewBillForm({ children }) {
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoadingContext);
   const { setShowToast, setToastContent } = useContext(ToastContext);
   async function handleFormSubmit(e) {
@@ -65,6 +67,7 @@ function NewBillForm({ children }) {
     alink.href = window.URL.createObjectURL(blob);
     alink.download = `Invoice-${res.message.data.number.toString().padStart(3, "0")}.pdf`;
     alink.click();
+    navigate("/invoice");
   }
   //children is array of BenenificiaryInput components
   return (
