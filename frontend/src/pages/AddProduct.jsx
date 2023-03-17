@@ -11,8 +11,12 @@ function AddProduct() {
       <h1>Add Product</h1>
       <form onSubmit={(e) => handleSubmit(e, dispatch, setShowToast, setToastContent)}>
         <input id="name" placeholder="Name" />
-        <input id="group" placeholder="Group" defaultValue="General" />
         <input id="hsn" placeholder="HSN" />
+        <select name="group" id="group" defaultValue={"General"}>
+          <option value={"General"}>General</option>
+          <option value={"Techno"}>Techno</option>
+          <option value={"DC"}>DC</option>
+        </select>
         <select name="tax" id="tax" defaultValue={9}>
           <option value={2.5}>2.5+2.5</option>
           <option value={6}>6+6</option>
