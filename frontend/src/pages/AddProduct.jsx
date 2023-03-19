@@ -1,45 +1,37 @@
-import { useContext } from "react";
-import { ProductContext } from "../context/Provider/ProductContext";
-import { ToastContext } from "../context/Provider/ToastContext";
-import { useFetch } from "../hooks";
+import NewProductForm from "../components/Product/NewProductForm";
+import ProductInput from "../components/Product/ProductInput";
+import ProductSelect from "../components/Product/ProductSelect";
 
-function AddProduct() {
-  const { dispatch } = useContext(ProductContext);
-  const { setShowToast, setToastContent } = useContext(ToastContext);
+export default function AddProduct() {
   return (
-    <div>
+    <>
       <h1>Add Product</h1>
-      <form onSubmit={(e) => handleSubmit(e, dispatch, setShowToast, setToastContent)}>
-        <input id="name" placeholder="Name" />
-        <input id="hsn" placeholder="HSN" />
-        <select name="group" id="group" defaultValue={"General"}>
-          <option value={"General"}>General</option>
-          <option value={"Techno"}>Techno</option>
-          <option value={"DC"}>DC</option>
-        </select>
-        <select name="tax" id="tax" defaultValue={9}>
-          <option value={2.5}>2.5+2.5</option>
-          <option value={6}>6+6</option>
-          <option value={9}>9+9</option>
-          <option value={14}>14+14</option>
-        </select>
-        <input id="rate" placeholder="Rate" />
-        <button type="Submit">Submit</button>
-      </form>
-    </div>
+      <NewProductForm>
+        <ProductInput id="name" label="Product Name" />
+        <ProductInput id="hsn" label="HSN" />
+        <ProductSelect
+          id="group"
+          label="Group"
+          defaultValue="General"
+          options={[
+            { name: "General", value: "General" },
+            { name: "Techno", value: "Techno" },
+            { name: "DC", value: "DC" },
+          ]}
+        />
+        <ProductSelect
+          id="tax"
+          label="Tax Percent"
+          defaultValue={9}
+          options={[
+            { name: "2.5+2.5", value: 2.5 },
+            { name: "6+6", value: 6 },
+            { name: "9+9", value: 9 },
+            { name: "14+14", value: 14 },
+          ]}
+        />
+        <ProductInput id="rate" label="Rate" />
+      </NewProductForm>
+    </>
   );
 }
-
-async function handleSubmit(e, dispatch, setShowToast, setToastContent) {
-  e.preventDefault();
-  let [name, group, hsn, tax, rate] = ["name", "group", "hsn", "tax", "rate"].map(
-    (id) => document.querySelector(`#${id}`).value
-  );
-  let details = { name, group, hsn: parseInt(hsn), tax, rate: parseFloat(rate) };
-  let response = await useFetch("/api/product/new", "POST", details);
-  dispatch({ type: "ADD", payload: response.message.newProduct });
-  setToastContent({ message: response.message.message, type: "success" });
-  setShowToast(true);
-}
-
-export default AddProduct;
