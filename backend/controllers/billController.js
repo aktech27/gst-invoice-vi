@@ -155,4 +155,21 @@ const downloadInvoice = async (req, res) => {
   }
 };
 
-module.exports = { generateNew, viewInvoices, billNumber, previewInvoice, downloadInvoice };
+const deleteInvoice = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Bill.deleteOne({ _id: id });
+    return res.status(200).json({ message: "Bill Deleted Successfully" });
+  } catch (error) {
+    handleErrorResponse("Error in Bill Deletion", error, res);
+  }
+};
+
+module.exports = {
+  generateNew,
+  viewInvoices,
+  billNumber,
+  previewInvoice,
+  downloadInvoice,
+  deleteInvoice,
+};

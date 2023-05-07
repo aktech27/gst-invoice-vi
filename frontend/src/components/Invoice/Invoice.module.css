@@ -33,3 +33,13 @@
   text-align: center;
   text-transform: uppercase;
 }
+
+.invoiceTable td button {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.5em;
+  width: 30px;
+  aspect-ratio: 1;
+  cursor: pointer;
+}

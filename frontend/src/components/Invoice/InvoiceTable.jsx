@@ -11,6 +11,7 @@ export default function InvoiceTable({ children }) {
           <th>Amount</th>
           <th>Tax</th>
           <th>Total</th>
+          <th>Actions</th>
         </tr>
       </thead>
       {children}

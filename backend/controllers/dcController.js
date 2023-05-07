@@ -38,7 +38,16 @@ const generateNew = async (req, res) => {
 
 const viewAll = async (req, res) => {
   try {
-    let data = await DC.find({}).populate("to").populate("products.item").exec();
+    let { startDate, endDate } = getFinancialYear();
+    if (req.query.startDate && req.query.endDate) {
+      startDate = new Date(req.query.startDate);
+      endDate = new Date(req.query.endDate);
+    }
+    let data = await DC.find({ date: { $gte: startDate, $lte: endDate } })
+      .lean(true)
+      .populate("to")
+      .populate("products.item")
+      .exec();
     res.status(200).json({ data });
   } catch (error) {
     handleErrorResponse("Error in DC route", error, res);
@@ -93,4 +102,14 @@ const downloadDC = async (req, res) => {
   }
 };
 
-module.exports = { generateNew, viewAll, dcNumber, viewOne, downloadDC };
+const deleteDC = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await DC.deleteOne({ _id: id });
+    return res.status(200).json({ message: "DC Deleted Successfully" });
+  } catch (error) {
+    handleErrorResponse("Error in DC Deletion", error, res);
+  }
+};
+
+module.exports = { generateNew, viewAll, dcNumber, viewOne, downloadDC, deleteDC };
